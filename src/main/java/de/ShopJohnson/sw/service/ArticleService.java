@@ -1,8 +1,10 @@
 package de.ShopJohnson.sw.service;
 
 import de.ShopJohsnon.sw.entity.Article;
+import de.ShopJohsnon.sw.entity.repo.ArticleRepo;
 
 import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
@@ -12,38 +14,40 @@ import java.util.List;
 @RequestScoped
 public class ArticleService {
 
-    @PersistenceContext(unitName = "examplePU")
-    private EntityManager entityManager;
+//    @PersistenceContext(unitName = "examplePU")
+//    private EntityManager entityManager;
+    @Inject
+    ArticleRepo articleRepo;
 
     @Transactional
     public Article addArticleToRange(Article a) {
-        entityManager.persist(a);
+        articleRepo.persist(a);
         return a;
     }
     @Transactional
     public Article removeArticleFromRange(Article a){
-        a = entityManager.merge(a);
+        a = articleRepo.merge(a);
 
-        entityManager.remove(a);
+        articleRepo.remove(a);
 
         return a;
     }
 
     public Article changeArticleData(Article newArticleData) {
 
-        newArticleData = entityManager.merge(newArticleData);
+        newArticleData =articleRepo.merge(newArticleData);
 
         return newArticleData;
     }
     public Article getArticleById(long artNr){
-        Article found = entityManager.find(Article.class, artNr);
+        Article found = articleRepo.getById(artNr);
         return found;
     }
     public List<Article> getAllArticles() {
-        TypedQuery<Article> query = entityManager.createQuery(
-                "SELECT a FROM Article AS a",
-                Article.class
-        );
-        return query.getResultList();
+//        TypedQuery<Article> query = entityManager.createQuery(
+//                "SELECT a FROM Article AS a",
+//                Article.class
+//        );
+        return articleRepo.getAll();
     }
 }

@@ -1,5 +1,7 @@
 package de.ShopJohsnon.sw.entity.util;
 
+import de.ShopJohnson.sw.JohnonConfig;
+
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -19,12 +21,12 @@ import javax.transaction.Transactional.TxType;
 public abstract class
 SingleIdEntityRepository<K, E extends SingleIdEntity> implements Serializable {
     
-    public static final String PERSISTENCE_UNIT_NAME = "nameIhrerPU";
+    public static final String PERSISTENCE_UNIT_NAME = JohnonConfig.PERSISTANCE_UNIT_NAME;
     
     private Class<E> entityClass;
     
     @PersistenceContext(unitName=PERSISTENCE_UNIT_NAME)
-    private EntityManager em;
+    protected EntityManager em;
     
     public void persist(E entity){
         em.persist(entity);
