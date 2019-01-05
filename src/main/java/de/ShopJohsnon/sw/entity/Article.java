@@ -2,22 +2,41 @@ package de.ShopJohsnon.sw.entity;
 
 import de.ShopJohsnon.sw.entity.util.GeneratedIdEntity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 @Entity
 public class Article extends GeneratedIdEntity {
 
+    @NotNull
     private String artName;
+
+    @NotNull
     private float price;
+
+    private String description;
+    private String picturePath;
 
     public Article() {}
 
     public Article(String artName, float price) {
         this.artName = artName;
         this.price = price;
+    }
+    public Article(String artName, float price, String description) {
+        this.artName = artName;
+        this.price = price;
+        this.description = description;
+    }
+    public Article(String artName, float price, String description, String picturePath) {
+        this.artName = artName;
+        this.price = price;
+        this.description = description;
+        this.picturePath = picturePath;
     }
 
     public long getArtNr() {
@@ -51,5 +70,21 @@ public class Article extends GeneratedIdEntity {
                 ", name='" + artName + '\'' +
                 ", price=" + price +
                 '}';
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getPicturePath() {
+        return picturePath;
+    }
+
+    public void setPicturePath(String picturePath) {
+        this.picturePath = picturePath;
     }
 }

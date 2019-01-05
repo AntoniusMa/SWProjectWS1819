@@ -10,7 +10,6 @@ import org.primefaces.PrimeFaces;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.persistence.RollbackException;
 
 import java.io.Serializable;
 
@@ -18,7 +17,6 @@ import java.io.Serializable;
 @RequestScoped
 public class RegistrationModel implements Serializable {
     @Inject private CustomerService customerService;
-    @Inject TestModel testModel;
     private Customer customer = new Customer();
     private Address address = new Address();
     private String registrationStatus;
@@ -36,7 +34,6 @@ public class RegistrationModel implements Serializable {
             registrationMessage = "Successfully registered new Customer";
 
             System.out.println(customer.getCustomerId());
-            testModel.setCustomer(customer);
         }
         catch (Exception e) {
             registrationStatus = RegistrationStatus.FAILED.toString();
@@ -49,11 +46,7 @@ public class RegistrationModel implements Serializable {
         }
 
     }
-    public String backToLogin() {
-        PrimeFaces pf = PrimeFaces.current();
-        pf.executeScript("PF('submit_dialog').hide()");
-        return "test.xhtml";
-    }
+
     public void backToRegistration() {
         PrimeFaces pf = PrimeFaces.current();
         pf.executeScript("PF('submit_dialog').hide()");

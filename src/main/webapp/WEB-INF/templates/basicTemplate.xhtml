@@ -4,7 +4,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
 
 <h:head>
     <h:outputStylesheet library="css" name="template/layout.css"/>
@@ -20,15 +21,30 @@
             <h:form>
                 <h:commandLink value="Shop" action="startseite"/>&nbsp;&nbsp;&nbsp;&nbsp;
                 <h:commandLink value="Card" action="students"/>&nbsp;&nbsp;&nbsp;&nbsp;
-                <h:commandLink value="Pr&uuml;fungen" action="startseite"/>&nbsp;&nbsp;&nbsp;&nbsp;
+                <h:commandLink value="Homebase" action="#{userModel.forwardToUserPageOrLogin}"/>&nbsp;&nbsp;&nbsp;&nbsp;
                 <h:commandLink value="Mitarbeiter" action="startseite"/>&nbsp;&nbsp;&nbsp;&nbsp;
+                <p:commandButton style="float: right;" value="addArticles" action="#{shopModel.fillEmptyDataBase}"/>
             </h:form>
+
         </ui:insert>
     </div>
     <div>
         <div id="left">
             <ui:insert name="left">
-                LEFT
+                <p:outputPanel rendered="#{userModel.customer.username != null}">
+                    <div align="center">
+                        You are logged in as <br/>
+                        #{userModel.customer.username} <br/>
+                        Welcome <br/>#{userModel.customer.firstname} <br/> #{userModel.customer.lastname}
+                    </div>
+                    <div align="center">
+                    <h:graphicImage style="width: 80%;" value="https://memegenerator.net/img/instances/58076838/please-buy-my-stuff.jpg"/>
+                    </div>
+                </p:outputPanel>
+                <p:outputLabel rendered="#{userModel.customer.username == null}">
+                    You are not logged in
+                </p:outputLabel>
+
             </ui:insert>
         </div>
         <div id="content" class="left_content">

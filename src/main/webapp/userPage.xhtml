@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+
+    <h:body>
+
+        <ui:composition template="./WEB-INF/templates/basicTemplate.xhtml">
+            <ui:define name="content">
+                <f:view>
+                    <h1>Your profile #{userModel.customer.username}</h1>
+                    <h:panelGrid columns="2" cellpadding="5">
+                        <p:outputLabel for="username" value="Username:" />
+                        <p:outputLabel id="username" value="#{userModel.customer.username}"/>
+
+                        <p:outputLabel for="firstname" value="Firstname: " />
+                        <p:outputLabel id="firstname" value="#{userModel.customer.firstname}"/>
+
+                        <p:outputLabel for="lastname" value="Lastname: " />
+                        <p:outputLabel id="lastname" value="#{userModel.customer.lastname}" />
+
+                        <p:outputLabel for="postalcode" value="Postalcode:" />
+                        <p:outputLabel id="postalcode" value="#{userModel.customer.address.plz}"/>
+
+                        <p:outputLabel for = "street" value="Street: " />
+                        <p:outputLabel id="street" value="#{userModel.customer.address.street}"/>
+
+                        <p:outputLabel for = "city" value="City: " />
+                        <p:outputLabel id="city" value="#{userModel.customer.address.city}"/>
+
+                        <p:outputLabel for = "country" value="Country: " />
+                        <p:outputLabel id="country" value="#{userModel.customer.address.country}"/>
+                    </h:panelGrid>
+                </f:view>
+            </ui:define>
+        </ui:composition>
+
+    </h:body>
+</html>

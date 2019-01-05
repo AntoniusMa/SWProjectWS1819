@@ -37,6 +37,12 @@ public class CustomerService {
     public Customer getCustomerByName(String name) {
         return customerRepo.getCustomerByUsername(name);
     }
+    public Customer getCustomerWithLogin(String username, String password){
+        if(username==null || password == null) {
+            return null;
+        }
+        return customerRepo.getCustomerByLogin(username, password);
+    }
     public Customer getCustomerById(long customerId) {
         return customerRepo.getById(customerId);
     }
