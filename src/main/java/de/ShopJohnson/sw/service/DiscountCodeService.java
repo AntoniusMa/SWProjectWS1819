@@ -6,6 +6,7 @@ import de.ShopJohsnon.sw.entity.repo.DiscountCodeRepo;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import javax.jws.WebMethod;
 import javax.jws.WebService;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
@@ -13,12 +14,13 @@ import java.util.List;
 
 @WebService
 @RequestScoped
-public class DiscountCodeService {
+public class DiscountCodeService implements DiscountCodeIF{
 
     @Inject
     DiscountCodeRepo discountCodeRepo;
 
     @Transactional
+    @Override
     public DiscountCode createSingleDiscountCode() {
         DiscountCodeEntity dc = new DiscountCodeEntity(0.50f);
         discountCodeRepo.persist(dc);
@@ -26,6 +28,7 @@ public class DiscountCodeService {
     }
 
     //@WebMethod
+    @Override
     @Transactional
     public List<DiscountCode> createMultipleDiscountCodes(int amount) {
         List<DiscountCode> codeList = new ArrayList<DiscountCode>();
@@ -34,13 +37,14 @@ public class DiscountCodeService {
         }
         return codeList;
     }
+    @WebMethod(exclude = true)
     @Transactional
     public DiscountCode removeDiscountCode (DiscountCode dc) {
         DiscountCodeEntity dce = discountCodeRepo.getById(dc.getDiscountCode());
         discountCodeRepo.remove(dce);
         return dc;
     }
-
+    @WebMethod(exclude = true)
     @Transactional
     public DiscountCode invalidateCode(DiscountCode dc) {
         DiscountCodeEntity dce = discountCodeRepo.getById(dc.getDiscountCode());
