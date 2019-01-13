@@ -6,10 +6,12 @@ import de.ShopJohsnon.sw.entity.repo.DiscountCodeRepo;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import javax.jws.WebService;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
+@WebService
 @RequestScoped
 public class DiscountCodeService {
 
@@ -23,6 +25,8 @@ public class DiscountCodeService {
         return new DiscountCode(dc);
     }
 
+    //@WebMethod
+    @Transactional
     public List<DiscountCode> createMultipleDiscountCodes(int amount) {
         List<DiscountCode> codeList = new ArrayList<DiscountCode>();
         for(int i=0; i < amount; i++) {
