@@ -2,7 +2,7 @@ package de.ShopJohnson.sw.ui.model;
 
 import de.ShopJohnson.sw.Emeddables.Address;
 import de.ShopJohnson.sw.service.CustomerService;
-import de.ShopJohnson.sw.ui.utils.RegistrationStatus;
+import de.ShopJohnson.sw.ui.consts.RegistrationStatus;
 import de.ShopJohsnon.sw.entity.Customer;
 import org.hibernate.exception.ConstraintViolationException;
 import org.primefaces.PrimeFaces;
@@ -47,10 +47,6 @@ public class RegistrationModel implements Serializable {
 
     }
 
-    public void backToRegistration() {
-        PrimeFaces pf = PrimeFaces.current();
-        pf.executeScript("PF('submit_dialog').hide()");
-    }
     private boolean checkEmptyInputs() {
         if(customer.getUsername() == null) {
             registrationMessage = "Missing entry for username";

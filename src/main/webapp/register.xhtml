@@ -49,7 +49,7 @@
                         <p:inputText id="country" value="#{registrationModel.address.country}" placeholder="Country"/>
 
                         <p:commandButton value="Reset" type="reset" />
-                        <p:commandButton value="Submit" type="submit" action="#{registrationModel.registerCustomer()}" update="dialog" oncomplete="PF('submit_dialog').show()" />
+                        <p:commandButton value="Register" type="submit" action="#{registrationModel.registerCustomer()}" update="dialog" oncomplete="PF('submit_dialog').show()" />
 
                     </h:panelGrid>
                     <p:dialog id="dialog" widgetVar="submit_dialog" modal="true" resizable="false" header="#{registrationModel.registrationStatus}" showEffect="fade" hideEffect="fade" >
@@ -61,8 +61,8 @@
                                 <div>
                                     <h:graphicImage value="https://memegenerator.net/img/instances/74399275/thanks-for-your-free-personal-data-love-mark.jpg" rendered="#{registrationModel.registrationStatus == 'Registration successful'}" />
                                 </div>
-                                <p:commandButton value="Back to login" action="#{userModel.forwardToUserPageOrLogin}" />
-                                <p:commandButton value="Back to registration" action="#{registrationModel.backToRegistration}" />
+                                <p:button  value="Back to login" outcome="#{userModel.forwardToUserPageOrLogin()}" />
+                                <p:button type="button" value="Back to registration" onclick="PF('submit_dialog').hide()"/>
                             </div>
                         </p:panel>
                     </p:dialog>

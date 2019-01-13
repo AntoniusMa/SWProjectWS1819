@@ -7,36 +7,26 @@ import javax.persistence.Embeddable;
 public class ShopTransaction {
 
 
-    private String receiverName;
-    private Long payJohnsonId = -1l;
+    private String sourceName;
     private String payStatus;
 
     public ShopTransaction() {
 
     }
 
-    public ShopTransaction(String receiverName, long payJohnsonId, String payStatus) {
-        this.receiverName = receiverName;
-        this.payJohnsonId = payJohnsonId;
+    public ShopTransaction(String sourceName, String payStatus) {
+        this.sourceName = sourceName;
         this.payStatus = payStatus;
     }
-    @Column(nullable = true)
-    public String getReceiverName() {
-        return receiverName;
+
+    public String getSourceName() {
+        return sourceName;
     }
 
-    public void setReceiverName(String receiverName) {
-        this.receiverName = receiverName;
-    }
-    @Column(nullable = true)
-    public long getPayJohnsonId() {
-        return payJohnsonId;
+    public void setSourceName(String receiverName) {
+        this.sourceName = receiverName;
     }
 
-    public void setPayJohnsonId(long payJohnsonId) {
-        this.payJohnsonId = payJohnsonId;
-    }
-    @Column(nullable = true)
     public String getPayStatus() {
         return payStatus;
     }
@@ -48,8 +38,7 @@ public class ShopTransaction {
     @Override
     public String toString() {
         return "ShopTransaction {" +
-                " Receiver = " + receiverName +
-                " Pay Johnson Id = " + payJohnsonId +
+                " Receiver = " + sourceName +
                 " Status = " + payStatus + "}";
     }
 

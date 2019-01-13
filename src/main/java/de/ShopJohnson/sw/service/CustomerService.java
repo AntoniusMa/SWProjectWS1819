@@ -10,6 +10,7 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import javax.swing.text.html.CSS;
 import javax.transaction.Transactional;
 import java.util.List;
 
@@ -34,6 +35,15 @@ public class CustomerService {
 
         return c;
     }
+    @Transactional
+    public Customer persist(Customer c) {
+        customerRepo.persist(c);
+        return c;
+    }
+    public Customer merge(Customer c) {
+        return customerRepo.merge(c);
+    }
+
     public Customer getCustomerByName(String name) {
         return customerRepo.getCustomerByUsername(name);
     }

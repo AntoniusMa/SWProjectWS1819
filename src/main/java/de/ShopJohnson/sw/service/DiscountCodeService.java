@@ -1,6 +1,6 @@
 package de.ShopJohnson.sw.service;
 
-import de.ShopJohnson.sw.Dto.DiscountCode;
+import de.ShopJohnson.sw.DTO.DiscountCode;
 import de.ShopJohsnon.sw.entity.DiscountCodeEntity;
 import de.ShopJohsnon.sw.entity.repo.DiscountCodeRepo;
 

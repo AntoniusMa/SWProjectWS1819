@@ -21,22 +21,21 @@ public class ShopOrderService {
     @Inject
     CustomerService customerService;
 
-    @Transactional
-    public ShopOrder createShopOrder(Customer customer, List<Article> articles) {
-        customer = customerService.getCustomerById(customer.getCustomerId());
-        customer = entityManager.merge(customer);
 
-        ShopOrder shopOrder = new ShopOrder(customer, articles);
-        customer.addShopOrder(shopOrder);
+    @Transactional
+    public ShopOrder persistShopOrder(ShopOrder shopOrder) {
+        shopOrder.setCustomer(customerService.getCustomerByName(shopOrder.getCustomer().getUsername()));
+        shopOrder.getCustomer().addShopOrder(shopOrder);
         entityManager.persist(shopOrder);
-        entityManager.persist(customer);
+        Customer c = customerService.persist(shopOrder.getCustomer());
+        System.out.println(c.getShopOrders().isEmpty());
         return shopOrder;
     }
     public List<ShopOrder> getCustomersOrders(Customer customer) {
         TypedQuery<ShopOrder> query = entityManager.createQuery(
-                "select o from ShopOrder as o where o.customer = :customer", ShopOrder.class
+                "select o from ShopOrder as o where o.customer.id = :customer", ShopOrder.class
         );
-        query.setParameter("customer", customer);
+        query.setParameter("customer", customer.getId());
         return  query.getResultList();
     }
 }

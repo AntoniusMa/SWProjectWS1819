@@ -1,10 +1,10 @@
 
 #top {
     position: relative;
-    background-color: black;
+    background-color: forestgreen;
     background-image: url("#{request.contextPath}/resources/images/oth-regensburg-logo-bildmarke.png");
     background-repeat: no-repeat;
-    color: white;
+    color: black;
     height: 70px;
     padding: 5px 5px 15px 180px;
     margin: 0px 0px 10px 0px;
@@ -15,6 +15,7 @@
     background-color: #c2dfef;
     padding: 5px;
     margin: 10px 0px 0px 0px;
+    z-index: -1;
 }
 
 #left {

@@ -14,16 +14,17 @@
         <ui:define name="content">
             <f:view>
                 <h1>Login and Registration</h1>
-                <h:form>
-                    Please login or <h:commandLink value="register" action="register" /> <br/>
+                <h:form id="login-form">
+                    Please login or <h:link value="register" outcome="register" /> <br/>
                     <h:panelGrid columns="2" >
-                        <p:outputLabel for="username" value="Username:" />
+                        <p:outputLabel for="username" value="Username:"/>
                         <p:inputText id="username" value="#{userModel.customer.username}" placeholder="Username"/>
                         <p:outputLabel for="password" value="Password:" />
                         <p:inputText id="password" value="#{userModel.customer.password}" placeholder="Password"/>
-                    <h:commandButton value="Login" action="#{userModel.tryLogin}"/><br/>
+                        <p:commandButton value="Login" update="login-form" action="#{userModel.tryLogin}"/>
+                        <p:outputLabel style="color: red" value="#{userModel.loginStatus}" />
                     </h:panelGrid>
-                    #{userModel.loginStatus}
+
                 </h:form>
             </f:view>
         </ui:define>

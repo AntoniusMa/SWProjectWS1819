@@ -1,4 +1,4 @@
-package de.ShopJohnson.sw.ui.utils;
+package de.ShopJohnson.sw.ui.consts;
 
 public enum RegistrationStatus {
     FAILED {

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:body>
+
+    <ui:composition template="./WEB-INF/templates/basicTemplate.xhtml">
+        <ui:define name="content">
+            <h:form id="shop-form">
+                <p:dataGrid value="#{shopModel.articleList}" var = "article"  layout="grid" columns="4"
+                            style="width: 100%;
+                                    align-content: center;
+                                    text-align: center;
+                                    vertical-align: center;">
+                    <p:outputPanel style="align-content: center">
+                        <h2 style="color:black;">#{article.artName}</h2>
+                        <p:graphicImage style="width: 80%" value="#{article.picturePath}">
+
+                        </p:graphicImage>
+                        <p>#{article.description}</p>
+                        <h:outputText value="#{article.price}">
+                            <f:convertNumber minFractionDigits="2" type="currency" currencySymbol="€" locale="de-DE" />
+                        </h:outputText>
+                        <div style="margin-top: 5px">
+                            <p:commandButton value="Add to cart" update="top-form" action="#{cartModel.addArticleToCart(article)}" />
+                        </div>
+                    </p:outputPanel>
+                </p:dataGrid>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</h:body>
+</html>

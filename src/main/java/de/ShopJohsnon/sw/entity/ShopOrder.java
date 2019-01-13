@@ -13,10 +13,10 @@ public class ShopOrder extends GeneratedIdEntity {
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Customer customer;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<Article> articles;
-//    @Embedded
-//    private ShopTransaction transaction;
+    @Embedded
+    private ShopTransaction shopTransaction;
 
 
     @OneToOne
@@ -25,15 +25,42 @@ public class ShopOrder extends GeneratedIdEntity {
     public ShopOrder() {
 
     }
-    public ShopOrder(Customer customer, List<Article> articles) {
+    public ShopOrder(List<Article> articles) {
+        this.articles = articles;
+        calculateBillingAmount();
+    }
+    public ShopOrder(Customer customer, List<Article> articles, ShopTransaction shopTransaction) {
         this.customer = customer;
         this.articles = articles;
         this.billingAmount = 0;
-        for (Article article : this.articles) {
-            this.billingAmount += article.getPrice();
+        calculateBillingAmount();
+        this.shopTransaction = shopTransaction;
+    }
+    private void calculateBillingAmount() {
+        this.billingAmount = 0;
+        for (Article a : this.articles) {
+            this.billingAmount += a.getPrice();
         }
     }
+    public void addArticle(Article a) {
+        articles.add(a);
+        this.billingAmount += a.getPrice();
+    }
+    public void removeArticle(Article a) {
+        if(articles.isEmpty()) {
+            return;
+        }
+        articles.remove(a);
+        this.billingAmount -= a.getPrice();
+    }
 
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
 
     public void setArticles(List<Article> articles) {
         this.articles = articles;
@@ -60,13 +87,13 @@ public class ShopOrder extends GeneratedIdEntity {
         return articles;
     }
 
-//    public ShopTransaction getTransaction() {
-//        return transaction;
-//    }
-//
-//    public void setTransaction(ShopTransaction transaction) {
-//        this.transaction = transaction;
-//    }
+    public ShopTransaction getShopTransaction() {
+        return shopTransaction;
+    }
+
+    public void setShopTransaction(ShopTransaction transaction) {
+        this.shopTransaction = transaction;
+    }
 
     public DiscountCodeEntity getDiscountCode() {
         return discountCode;
