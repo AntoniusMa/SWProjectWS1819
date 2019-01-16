@@ -44,7 +44,6 @@ public class CartModel implements Serializable {
     }
     public void addArticleToCart(Article a) {
         shopOrder.addArticle(a);
-        logger.info("Adding article");
     }
     public void removeArticleFromCart(Article a) {
         shopOrder.removeArticle(a);
@@ -56,7 +55,9 @@ public class CartModel implements Serializable {
 //        }
         shopOrder.setCustomer(userModel.getCustomer());
         ShopTransaction shopTransaction = new ShopTransaction(JohnonConfig.SHOP_PAYJOHNSON_ID, TransactionStatus.TRANSACTION_NOT_CONFIRMED);
-        shopTransaction.setPayStatus(payService.instructJohnsonPayment(shopTransaction));
+        shopOrder.setShopTransaction(shopTransaction);
+        shopOrder.getShopTransaction().setPayStatus(payService.instructJohnsonPayment(shopOrder));
+        logger.info(shopOrder.getShopTransaction());
         if(shopTransaction.getPayStatus() == TransactionStatus.TRANSACTION_DATA_CONFIRMED) {
             shopOrderService.persistShopOrder(shopOrder);
         }

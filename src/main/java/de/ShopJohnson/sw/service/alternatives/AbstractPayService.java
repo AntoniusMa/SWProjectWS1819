@@ -1,8 +1,8 @@
 package de.ShopJohnson.sw.service.alternatives;
 
-import de.ShopJohnson.sw.Emeddables.ShopTransaction;
+import de.ShopJohsnon.sw.entity.ShopOrder;
 
 public interface AbstractPayService {
-    String instructJohnsonPayment(ShopTransaction shopTransaction);
+    String instructJohnsonPayment(ShopOrder shopTransaction);
 }
 

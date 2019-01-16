@@ -5,10 +5,11 @@ import de.ShopJohsnon.sw.entity.DiscountCodeEntity;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.io.Serializable;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-public class DiscountCode {
+public class DiscountCode implements Serializable {
 
     private String discountCode;
     private float amount;

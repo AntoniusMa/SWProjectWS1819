@@ -1,8 +1,8 @@
-package de.ShopJohnson.sw.service.alternatives;
+package de.ShopJohnson.sw.service.alternatives.Payment;
 
-import de.ShopJohnson.sw.Emeddables.ShopTransaction;
 import de.ShopJohnson.sw.service.alternatives.AbstractPayService;
 import de.ShopJohnson.sw.ui.consts.TransactionStatus;
+import de.ShopJohsnon.sw.entity.ShopOrder;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Alternative;
@@ -13,7 +13,7 @@ import java.io.Serializable;
 public class PayServiceTest implements AbstractPayService, Serializable {
 
     @Override
-    public String instructJohnsonPayment(ShopTransaction shopTransaction) {
+    public String instructJohnsonPayment(ShopOrder shopTransaction) {
         try {
             Thread.sleep(1000);
         }
