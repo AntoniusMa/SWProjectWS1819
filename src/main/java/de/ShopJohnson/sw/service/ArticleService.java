@@ -19,12 +19,13 @@ public class ArticleService {
     @Inject
     ArticleRepo articleRepo;
 
-    @Transactional
+    @Transactional(Transactional.TxType.REQUIRED)
     public Article addArticleToRange(Article a) {
         articleRepo.persist(a);
         return a;
     }
-    @Transactional
+
+    @Transactional(Transactional.TxType.REQUIRED)
     public Article removeArticleFromRange(Article a){
         a = articleRepo.merge(a);
 
@@ -34,7 +35,6 @@ public class ArticleService {
     }
 
     public Article changeArticleData(Article newArticleData) {
-
         newArticleData =articleRepo.merge(newArticleData);
 
         return newArticleData;

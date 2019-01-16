@@ -4,6 +4,7 @@ import de.ShopJohnson.sw.service.CustomerService;
 import de.ShopJohnson.sw.service.ShopOrderService;
 import de.ShopJohsnon.sw.entity.Customer;
 import de.ShopJohsnon.sw.entity.ShopOrder;
+import de.ShopJohsnon.sw.entity.util.EntityUtils;
 import org.primefaces.PrimeFaces;
 
 import javax.enterprise.context.SessionScoped;
@@ -43,20 +44,20 @@ public class UserModel implements Serializable {
     public String tryLogin() {
 
         try {
-            Customer c = customerService.getCustomerWithLogin(customer.getUsername(), customer.getPassword());
-            if (c == null){
-                loginStatus = "Username or password wrong";
-            }
-            else {
+            Customer c = customerService.getCustomerByName(customer.getUsername());
+
+            if(c.getPassword().equals(EntityUtils.hashPassword(customer.getPassword(), c.getSalt(), "SHA-256"))){
                 customer = c;
                 loggedIn = true;
                 loginStatus = "";
                 return "userPage.xhtml";
             }
+            else {
+                loginStatus = "Username or password wrong";
+            }
         }
         catch (Exception e) {
             loginStatus = "Username or password wrong";
-            return null;
         }
 
         return null;

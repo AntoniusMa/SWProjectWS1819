@@ -27,7 +27,7 @@ SingleIdEntityRepository<K, E extends SingleIdEntity> implements Serializable {
     
     @PersistenceContext(unitName=PERSISTENCE_UNIT_NAME)
     protected EntityManager em;
-    
+
     public void persist(E entity){
         em.persist(entity);
     }
@@ -36,7 +36,7 @@ SingleIdEntityRepository<K, E extends SingleIdEntity> implements Serializable {
     public E merge(E entity){
         return em.merge(entity);
     }
-    
+
     public void remove(E entity){
         em.remove(entity);
     }

@@ -1,6 +1,7 @@
 package de.ShopJohsnon.sw.entity;
 
 import de.ShopJohnson.sw.Emeddables.Address;
+import de.ShopJohsnon.sw.entity.util.EntityUtils;
 import de.ShopJohsnon.sw.entity.util.GeneratedIdEntity;
 
 import javax.persistence.*;
@@ -18,6 +19,9 @@ public class Customer extends GeneratedIdEntity {
     private String username;
     @Column(nullable = false)
     private String password;
+    @Column(nullable = false)
+    private String salt;
+
     private Address address;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
@@ -29,9 +33,8 @@ public class Customer extends GeneratedIdEntity {
         this.firstname = firstname;
         this.lastname = lastname;
         this.username = username;
-        this.password = password;
         this.address = address;
-
+        this.password = password;
     }
 
     public long getCustomerId() {
@@ -91,6 +94,14 @@ public class Customer extends GeneratedIdEntity {
     }
     public boolean addShopOrder(ShopOrder shopOrder) {
         return shopOrders.add(shopOrder);
+    }
+
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
     }
 
     @Override

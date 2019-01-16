@@ -2,9 +2,8 @@ package de.ShopJohnson.sw.ui.model;
 
 import de.ShopJohnson.sw.Emeddables.ShopTransaction;
 import de.ShopJohnson.sw.JohnonConfig;
-import de.ShopJohnson.sw.service.PayService;
 import de.ShopJohnson.sw.service.ShopOrderService;
-import de.ShopJohnson.sw.ui.JohnsonUtil;
+import de.ShopJohnson.sw.service.alternatives.AbstractPayService;
 import de.ShopJohnson.sw.ui.consts.TransactionStatus;
 import de.ShopJohsnon.sw.entity.Article;
 import de.ShopJohsnon.sw.entity.ShopOrder;
@@ -15,12 +14,11 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
+import org.jboss.logging.Logger;
 
 @Named
 @SessionScoped
 public class CartModel implements Serializable {
-    private List<Article> articles;
     private String payJohnsonName;
     private ShopOrder shopOrder;
     private String discountCode;
@@ -29,29 +27,36 @@ public class CartModel implements Serializable {
     private String discountMeme = "";
     @Inject UserModel userModel;
 
+
+
     @Inject
-    PayService payService;
+    AbstractPayService payService;
 
     @Inject
     ShopOrderService shopOrderService;
+
+    @Inject
+    Logger logger;
+
 
     public CartModel() {
         this.shopOrder = new ShopOrder(new ArrayList<Article>());
     }
     public void addArticleToCart(Article a) {
         shopOrder.addArticle(a);
+        logger.info("Adding article");
     }
     public void removeArticleFromCart(Article a) {
-        articles.remove(a);
+        shopOrder.removeArticle(a);
     }
     public void buy() {
         PrimeFaces pf = PrimeFaces.current();
-        if(!userModel.isLoggedIn()) {
-            return;
-        }
+//        if(!userModel.isLoggedIn()) {
+//            return;
+//        }
         shopOrder.setCustomer(userModel.getCustomer());
         ShopTransaction shopTransaction = new ShopTransaction(JohnonConfig.SHOP_PAYJOHNSON_ID, TransactionStatus.TRANSACTION_NOT_CONFIRMED);
-        shopTransaction.setPayStatus(payService.getJohnsonConfirmation(shopTransaction));
+        shopTransaction.setPayStatus(payService.instructJohnsonPayment(shopTransaction));
         if(shopTransaction.getPayStatus() == TransactionStatus.TRANSACTION_DATA_CONFIRMED) {
             shopOrderService.persistShopOrder(shopOrder);
         }
@@ -74,14 +79,6 @@ public class CartModel implements Serializable {
     public String getPayJohnsonConfirmation() {
 
         return null;
-    }
-
-    public List<Article> getArticles() {
-        return articles;
-    }
-
-    public void setArticles(List<Article> articles) {
-        this.articles = articles;
     }
 
     public String getPayJohnsonName() {

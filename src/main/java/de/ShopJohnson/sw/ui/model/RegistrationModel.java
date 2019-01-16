@@ -23,17 +23,14 @@ public class RegistrationModel implements Serializable {
     private String registrationMessage;
     public void registerCustomer() {
         customer.setAddress(address);
-        System.out.println("registering");
         if(checkEmptyInputs()) {
             return;
         }
         try {
 
-            Customer c = customerService.register(customer);
+            customerService.register(customer);
             registrationStatus = RegistrationStatus.SUCCESSFUL.toString();
             registrationMessage = "Successfully registered new Customer";
-
-            System.out.println(customer.getCustomerId());
         }
         catch (Exception e) {
             registrationStatus = RegistrationStatus.FAILED.toString();

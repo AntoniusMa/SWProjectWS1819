@@ -22,13 +22,12 @@ public class ShopOrderService {
     CustomerService customerService;
 
 
-    @Transactional
+    @Transactional(Transactional.TxType.REQUIRED)
     public ShopOrder persistShopOrder(ShopOrder shopOrder) {
         shopOrder.setCustomer(customerService.getCustomerByName(shopOrder.getCustomer().getUsername()));
         shopOrder.getCustomer().addShopOrder(shopOrder);
         entityManager.persist(shopOrder);
-        Customer c = customerService.persist(shopOrder.getCustomer());
-        System.out.println(c.getShopOrders().isEmpty());
+        customerService.persist(shopOrder.getCustomer());
         return shopOrder;
     }
     public List<ShopOrder> getCustomersOrders(Customer customer) {
