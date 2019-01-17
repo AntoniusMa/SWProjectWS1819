@@ -32,7 +32,7 @@ public class CartModel implements Serializable {
 
     @Inject UserModel userModel;
 
-
+    @Inject LoginModel loginModel;
 
     @Inject
     AbstractPayService payService;
@@ -70,7 +70,7 @@ public class CartModel implements Serializable {
      */
     public void buy() {
         PrimeFaces pf = PrimeFaces.current();
-//        if(!userModel.isLoggedIn()) {
+//        if(!loginModel.isLoggedIn()) {
 //            return;
 //        }
         shopOrder.setCustomer(userModel.getCustomer());

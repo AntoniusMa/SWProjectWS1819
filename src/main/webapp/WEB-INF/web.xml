@@ -29,8 +29,23 @@
         <url-pattern>*.xhtml</url-pattern>
     </servlet-mapping>
 
+
+
+    <!-- Login filter -->
+    <filter>
+        <filter-name>LoginFilter</filter-name>
+        <filter-class>de.ShopJohnson.sw.ui.filters.LoginFilter</filter-class>
+    </filter>
+    <!-- Set the login filter to secure all the pages in the /secured/* path of the application  -->
+    <filter-mapping>
+        <filter-name>LoginFilter</filter-name>
+        <url-pattern>/userPage.xhtml</url-pattern>
+    </filter-mapping>
+
+
+
     <welcome-file-list>
-        <welcome-file>login.xhtml</welcome-file>
+        <welcome-file>userPage.xhtml</welcome-file>
     </welcome-file-list>
 
 </web-app>

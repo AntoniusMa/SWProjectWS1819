@@ -21,7 +21,7 @@
             <h:form id="top-form">
                 <h:link value="Shop" outcome="shop"/>&nbsp;&nbsp;&nbsp;&nbsp;
                 <h:link value="Cart #{cartModel.shopOrder.articles.size()}" outcome="cart"/>&nbsp;&nbsp;&nbsp;&nbsp;
-                <h:link type="link" value="Homebase 🥦🥦" outcome="#{userModel.forwardToUserPageOrLogin()}"/>&nbsp;&nbsp;&nbsp;&nbsp;
+                <h:link type="link" value="Homebase 🥦🥦" outcome="user"/>&nbsp;&nbsp;&nbsp;&nbsp;
                 <h:link value="Mitarbeiter" outcome="shop"/>&nbsp;&nbsp;&nbsp;&nbsp;
                 <p:commandButton style="float: right;" value="addArticles" action="#{shopModel.fillEmptyDataBase}"/>
             </h:form>

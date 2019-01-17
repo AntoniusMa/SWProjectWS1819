@@ -8,8 +8,10 @@ import de.ShopJohnson.sw.entity.util.EntityUtils;
 import org.primefaces.PrimeFaces;
 
 import javax.enterprise.context.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.HttpSession;
 import java.io.Serializable;
 import java.util.List;
 
@@ -19,36 +21,22 @@ public class UserModel implements Serializable {
 
     @Inject private CustomerService customerService;
 
+    @Inject private LoginModel loginModel;
+
+
     @Inject
     ShopOrderService shopOrderService;
 
-    private boolean loggedIn = false;
-
     private Customer customer = new Customer();
 
-    private String loginStatus = "";
+    private boolean loggedIn = false;
 
     private List<ShopOrder> shopOrders;
-
-    public String login() {
-
-        return "userPage.xhtml";
-    }
 
     /**
      * Function that decides on which page to forward when trying to go to user page
      * @return if logged in: user else login
      */
-    public String forwardToUserPageOrLogin() {
-        PrimeFaces pf = PrimeFaces.current();
-        if (loggedIn) {
-            return "user";
-        }
-        else {
-            return "login";
-        }
-
-    }
 
     /**
      * Tries to login redirects to userPage if successful
@@ -57,24 +45,33 @@ public class UserModel implements Serializable {
     public String tryLogin() {
 
         try {
-            Customer c = customerService.getCustomerByName(customer.getUsername());
+            Customer c = customerService.getCustomerByName(loginModel.getUsername());
 
-            if(c.getPassword().equals(EntityUtils.hashPassword(customer.getPassword(), c.getSalt(), "SHA-256"))){
+            if(c.getPassword().equals(EntityUtils.hashPassword(loginModel.getPassword(), c.getSalt(), "SHA-256"))){
                 customer = c;
-                loggedIn = true;
-                loginStatus = "";
-                return "userPage.xhtml";
+                setLoggedIn(true);
+                loginModel.setLoginStatus("");
+                setSession();
+
+                return "userPage.xhtml?faces-redirect=true";
             }
             else {
-                loginStatus = "Username or password wrong";
+                loginModel.setLoginStatus("Username or password wrong");
             }
         }
         catch (Exception e) {
-            loginStatus = "Username or password wrong";
+            loginModel.setLoginStatus("Username or password wrong");
         }
-
         return null;
     }
+
+
+    private void setSession() {
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(true);
+        session.setAttribute("user", this);
+    }
+
 
     public List<ShopOrder> getShopOrders() {
         return shopOrders;
@@ -103,13 +100,5 @@ public class UserModel implements Serializable {
 
     public void setLoggedIn(boolean loggedIn) {
         this.loggedIn = loggedIn;
-    }
-
-    public String getLoginStatus() {
-        return loginStatus;
-    }
-
-    public void setLoginStatus(String loginStatus) {
-        this.loginStatus = loginStatus;
     }
 }

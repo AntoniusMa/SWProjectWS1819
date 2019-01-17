@@ -18,11 +18,11 @@
                     Please login or <h:link value="register" outcome="register" /> <br/>
                     <h:panelGrid columns="2" >
                         <p:outputLabel for="username" value="Username:"/>
-                        <p:inputText id="username" value="#{userModel.customer.username}" placeholder="Username"/>
+                        <p:inputText id="username" value="#{loginModel.username}" placeholder="Username"/>
                         <p:outputLabel for="password" value="Password:" />
-                        <p:inputText id="password" type="password" value="#{userModel.customer.password}" placeholder="Password"/>
-                        <p:commandButton value="Login" update="login-form" action="#{userModel.tryLogin}"/>
-                        <p:outputLabel style="color: red" value="#{userModel.loginStatus}" />
+                        <p:inputText id="password" type="password" value="#{loginModel.password}" placeholder="Password"/>
+                        <p:commandButton ajax="false" value="Login" update="login-form" action="#{userModel.tryLogin}"/>
+                        <p:outputLabel style="color: red" value="#{loginModel.loginStatus}" />
                     </h:panelGrid>
 
                 </h:form>
