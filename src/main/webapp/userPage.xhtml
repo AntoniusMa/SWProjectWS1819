@@ -37,6 +37,7 @@
                         <p:outputLabel id="country" value="#{userModel.customer.address.country}"/>
                     </h:panelGrid>
                 </f:view>
+
                 <h:form id="orders-form">
                     <h2>Your orders:</h2>
                     <p:commandButton value="Get orders" action="#{userModel.getOrders()}" update="orders-form" />

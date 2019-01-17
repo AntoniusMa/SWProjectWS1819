@@ -19,9 +19,24 @@
                 <div>
                     <h1>Welcome to Shop Johnson registration</h1>
                     <h3 style="color: black">This is the shop where you can buy almost anything (including some delicious broc) </h3>
-
                 </div>
                 <h:graphicImage style="height: 300px" value="https://img3.stockfresh.com/files/k/kurhan/m/89/7825825_stock-photo-black-man-with-broccoli.jpg"/>
+                <p:dialog id="dialog" widgetVar="submit_dialog" modal="true" resizable="false" header="#{registrationModel.registrationStatus}" showEffect="fade" hideEffect="fade" >
+                    <h:form>
+                        <p:panel>
+                            <div style="align-content: center; vertical-align: center; text-align: center">
+                                <h3 style="color: black"> #{registrationModel.registrationMessage} </h3>
+                            </div>
+                            <div align="center">
+                                <div>
+                                    <h:graphicImage value="https://memegenerator.net/img/instances/74399275/thanks-for-your-free-personal-data-love-mark.jpg" rendered="#{registrationModel.registrationStatus == 'Registration successful'}" />
+                                </div>
+                                <p:commandButton  value="Back to login" action="userPage.xhtml?faces-redirect=true" />
+                                <p:button type="button" value="Back to registration" onclick="PF('submit_dialog').hide()"/>
+                            </div>
+                        </p:panel>
+                    </h:form>
+                </p:dialog>
                 <h:form>
                     <h:panelGrid columns ="2" cellpadding="5">
                         <p:outputLabel for="username" value="Username*:" />
@@ -52,20 +67,6 @@
                         <p:commandButton value="Register" type="submit" action="#{registrationModel.registerCustomer()}" update="dialog" oncomplete="PF('submit_dialog').show()" />
 
                     </h:panelGrid>
-                    <p:dialog id="dialog" widgetVar="submit_dialog" modal="true" resizable="false" header="#{registrationModel.registrationStatus}" showEffect="fade" hideEffect="fade" >
-                        <p:panel>
-                            <div style="align-content: center; vertical-align: center; text-align: center">
-                                <h3 style="color: black"> #{registrationModel.registrationMessage} </h3>
-                            </div>
-                            <div align="center">
-                                <div>
-                                    <h:graphicImage value="https://memegenerator.net/img/instances/74399275/thanks-for-your-free-personal-data-love-mark.jpg" rendered="#{registrationModel.registrationStatus == 'Registration successful'}" />
-                                </div>
-                                <p:button  value="Back to login" outcome="user" />
-                                <p:button type="button" value="Back to registration" onclick="PF('submit_dialog').hide()"/>
-                            </div>
-                        </p:panel>
-                    </p:dialog>
                 </h:form>
             </f:view>
         </ui:define>
