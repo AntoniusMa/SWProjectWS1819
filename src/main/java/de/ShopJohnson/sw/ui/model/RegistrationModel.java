@@ -3,9 +3,8 @@ package de.ShopJohnson.sw.ui.model;
 import de.ShopJohnson.sw.Emeddables.Address;
 import de.ShopJohnson.sw.service.CustomerService;
 import de.ShopJohnson.sw.ui.consts.RegistrationStatus;
-import de.ShopJohsnon.sw.entity.Customer;
+import de.ShopJohnson.sw.entity.Customer;
 import org.hibernate.exception.ConstraintViolationException;
-import org.primefaces.PrimeFaces;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;

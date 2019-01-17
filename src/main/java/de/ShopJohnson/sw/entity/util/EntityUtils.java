@@ -1,4 +1,4 @@
-package de.ShopJohsnon.sw.entity.util;
+package de.ShopJohnson.sw.entity.util;
 
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;

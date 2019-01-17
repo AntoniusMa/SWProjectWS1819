@@ -1,9 +1,8 @@
 package de.ShopJohnson.sw.service;
 
 import de.ShopJohnson.sw.JohnonConfig;
-import de.ShopJohsnon.sw.entity.Article;
-import de.ShopJohsnon.sw.entity.Customer;
-import de.ShopJohsnon.sw.entity.ShopOrder;
+import de.ShopJohnson.sw.entity.Customer;
+import de.ShopJohnson.sw.entity.ShopOrder;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;

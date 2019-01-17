@@ -1,13 +1,10 @@
 package de.ShopJohnson.sw.service;
 
-import de.ShopJohsnon.sw.entity.Article;
-import de.ShopJohsnon.sw.entity.repo.ArticleRepo;
+import de.ShopJohnson.sw.entity.Article;
+import de.ShopJohnson.sw.entity.repo.ArticleRepo;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 import java.util.List;
 

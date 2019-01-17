@@ -9,7 +9,15 @@
 <h:body>
     <ui:composition template="./WEB-INF/templates/basicTemplate.xhtml">
         <ui:define name="content">
-
+            <h:form>
+                <p:dialog id="pay-dialog-success" position="center" widgetVar="pay_dialog_success" modal="true" resizable="false"
+                          header="Pay Johnson confirmed" showEffect="fade" hideEffect="fade">
+                    <div align="center" style="width: 100%">
+                        <h4>Pay Johnson confirmed your data, we are waiting for the confirmation <br/>of the transaction and
+                            will send your stuff afterwards</h4>
+                    </div>
+                </p:dialog>
+            </h:form>
             <h:form id="cart-form">
                 <div align="center" >
                     <h:panelGrid columns="2" cellpadding="5">
@@ -34,7 +42,7 @@
                                      setTimeout(function() {
                                      $('#discount-dialog').hide('fade'); }, 3000);"
                     />
-                    <p:commandButton id="buy-button" action="#{cartModel.buy()}" value="Buy" widgetVar="buyButton"
+                    <p:commandButton id="buy-button" action="#{cartModel.buy}" value="Buy" widgetVar="buyButton"
                                      style="background-color: green; width: 20%; color: white;"
                                      disabled="#{cartModel.shopOrder.articles.size()==0
                                                 || cartModel.payJohnsonName == null}"
@@ -55,38 +63,33 @@
                                 <h:outputText value="#{article.price}" style="font-weight: bold"/>
                             </h:panelGrid>
                         </p:outputPanel>
-
+                        <h:form>
                         <p:commandButton value="Remove" style="background-color: darkred; color: white"
                                          action="#{cartModel.removeArticleFromCart(article)}"
                                          update="top-form cart-form"/>
+                        </h:form>
                     </h:panelGrid>
                     <hr />
                 </p:repeat>
 
             </h:form>
-            <p:dialog id="pay-dialog-success" widgetVar="pay_dialog_success" modal="true" resizable="false"
-                      header="Pay Johnson confirmed" showEffect="fade" hideEffect="fade">
-                <div align="center" style="width: 100%">
-                    <h4>Pay Johnson confirmed your data, we are waiting for the confirmation <br/>of the transaction and
-                    will send your stuff afterwards</h4>
-                </div>
-            </p:dialog>
-            <p:dialog id="pay-dialog-failure" widgetVar="pay_dialog_failure" modal="true" resizable="false"
-                      header="Pay Johnson confirmation failed" showEffect="fade" hideEffect="fade">
-                <div align="center">
-                    <h4>Pay Johnson could not confirm your data please try again</h4>
-                </div>
-            </p:dialog>
 
-            <p:dialog id="discount-dialog" draggable="false" closable="true" resizable="false" effect="slide"
-                      widgetVar="discount_dialog">
-                <div align="center">
+                <p:dialog id="pay-dialog-failure" position="center" widgetVar="pay_dialog_failure" modal="true" resizable="false"
+                          header="Pay Johnson confirmation failed" showEffect="fade" hideEffect="fade">
                     <div align="center">
-                        <p:commandButton value="Hide" style="width: 20%; background-color: red" action="#{cartModel.hideDiscountDialog()}" />
+                        <h4>Pay Johnson could not confirm your data please try again</h4>
                     </div>
-                    <h:graphicImage style="width: 40%" value="#{cartModel.discountMeme}" />
-                </div>
-            </p:dialog>
+                </p:dialog>
+
+                <p:dialog id="discount-dialog" draggable="false" closable="true" resizable="false" effect="slide"
+                          widgetVar="discount_dialog">
+                    <div align="center">
+                        <div align="center">
+                            <p:commandButton value="Hide" style="width: 20%; background-color: red" action="#{cartModel.hideDiscountDialog()}" />
+                        </div>
+                        <h:graphicImage style="width: 40%" value="#{cartModel.discountMeme}" />
+                    </div>
+                </p:dialog>
         </ui:define>
 
     </ui:composition>

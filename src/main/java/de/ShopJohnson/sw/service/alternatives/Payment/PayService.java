@@ -3,7 +3,7 @@ package de.ShopJohnson.sw.service.alternatives.Payment;
 import de.ShopJohnson.sw.JohnonConfig;
 import de.ShopJohnson.sw.service.alternatives.AbstractPayService;
 import de.ShopJohnson.sw.ui.consts.TransactionStatus;
-import de.ShopJohsnon.sw.entity.ShopOrder;
+import de.ShopJohnson.sw.entity.ShopOrder;
 import de.jevenari.sw.service.*;
 import org.jboss.logging.Logger;
 

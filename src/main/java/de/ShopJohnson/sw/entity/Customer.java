@@ -1,11 +1,9 @@
-package de.ShopJohsnon.sw.entity;
+package de.ShopJohnson.sw.entity;
 
 import de.ShopJohnson.sw.Emeddables.Address;
-import de.ShopJohsnon.sw.entity.util.EntityUtils;
-import de.ShopJohsnon.sw.entity.util.GeneratedIdEntity;
+import de.ShopJohnson.sw.entity.util.GeneratedIdEntity;
 
 import javax.persistence.*;
-import java.util.Collection;
 import java.util.List;
 
 @Entity

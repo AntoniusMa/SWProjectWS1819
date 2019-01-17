@@ -1,7 +1,7 @@
 package de.ShopJohnson.sw.ui.model;
 
 import de.ShopJohnson.sw.service.ArticleService;
-import de.ShopJohsnon.sw.entity.Article;
+import de.ShopJohnson.sw.entity.Article;
 
 
 import javax.annotation.PostConstruct;

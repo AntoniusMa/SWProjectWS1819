@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://service.sw.jevenari.de/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="PaymentServiceService" targetNamespace="http://service.sw.jevenari.de/">
+  <wsdl:types>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://service.sw.jevenari.de/" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://service.sw.jevenari.de/">
+  <xs:element name="instructPayment" type="tns:instructPayment"/>
+  <xs:element name="instructPaymentResponse" type="tns:instructPaymentResponse"/>
+  <xs:element name="transactionDTO" type="tns:transactionDTO"/>
+  <xs:complexType name="instructPayment">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="transaction" type="tns:transactionDTO"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="transactionDTO">
+    <xs:sequence>
+      <xs:element name="amount" type="xs:double"/>
+      <xs:element minOccurs="0" name="sourceUserName" type="xs:string"/>
+      <xs:element minOccurs="0" name="sourceUserPassword" type="xs:string"/>
+      <xs:element name="status" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="targetUserName" type="xs:string"/>
+      <xs:element minOccurs="0" name="transactionId" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="instructPaymentResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:transactionDTO"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="BankingException" type="tns:BankingException"/>
+  <xs:complexType name="BankingException">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="message" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="instructPayment">
+    <wsdl:part element="tns:instructPayment" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="instructPaymentResponse">
+    <wsdl:part element="tns:instructPaymentResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="BankingException">
+    <wsdl:part element="tns:BankingException" name="BankingException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="PaymentService">
+    <wsdl:operation name="instructPayment">
+      <wsdl:input message="tns:instructPayment" name="instructPayment">
+    </wsdl:input>
+      <wsdl:output message="tns:instructPaymentResponse" name="instructPaymentResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:BankingException" name="BankingException">
+    </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="PaymentServiceServiceSoapBinding" type="tns:PaymentService">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="instructPayment">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="instructPayment">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="instructPaymentResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="BankingException">
+        <soap:fault name="BankingException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="PaymentServiceService">
+    <wsdl:port binding="tns:PaymentServiceServiceSoapBinding" name="PaymentServicePort">
+      <soap:address location="http://localhost:8080/PayJohnson-0.1/PaymentService"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

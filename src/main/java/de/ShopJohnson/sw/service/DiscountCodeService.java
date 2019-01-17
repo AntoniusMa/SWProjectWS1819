@@ -1,15 +1,14 @@
 package de.ShopJohnson.sw.service;
 
 import de.ShopJohnson.sw.DTO.DiscountCode;
-import de.ShopJohsnon.sw.entity.DiscountCodeEntity;
-import de.ShopJohsnon.sw.entity.repo.DiscountCodeRepo;
+import de.ShopJohnson.sw.entity.DiscountCodeEntity;
+import de.ShopJohnson.sw.entity.repo.DiscountCodeRepo;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.jws.WebMethod;
 import javax.jws.WebService;
 import javax.transaction.Transactional;
-import javax.xml.bind.annotation.XmlTransient;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;

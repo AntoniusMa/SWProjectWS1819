@@ -1,4 +1,4 @@
-package de.ShopJohsnon.sw.entity.util;
+package de.ShopJohnson.sw.entity.util;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;

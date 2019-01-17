@@ -1,15 +1,19 @@
-package de.ShopJohsnon.sw.entity.util;
+package de.ShopJohnson.sw.entity.util;
 
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
 @MappedSuperclass
-public class StringIdEntity extends SingleIdEntity<String> {
+public class RandomIdEntity extends SingleIdEntity<String> {
 
     @Id
     protected String id;
     
+    protected RandomIdEntity() {
+        this.id = EntityUtils.createRandomString(8);
+    }
     
+            
     @Override
     public String getId() {
         return this.id;

@@ -1,6 +1,6 @@
-package de.ShopJohsnon.sw.entity;
+package de.ShopJohnson.sw.entity;
 
-import de.ShopJohsnon.sw.entity.util.RandomIdEntity;
+import de.ShopJohnson.sw.entity.util.RandomIdEntity;
 
 import javax.persistence.Entity;
 

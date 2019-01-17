@@ -1,6 +1,6 @@
 package de.ShopJohnson.sw.service.alternatives;
 
-import de.ShopJohsnon.sw.entity.ShopOrder;
+import de.ShopJohnson.sw.entity.ShopOrder;
 
 /**
  * Interface for implementing alternatives of PayJohnson Service implementations

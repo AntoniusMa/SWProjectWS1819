@@ -1,7 +1,7 @@
-package de.ShopJohsnon.sw.entity.repo;
+package de.ShopJohnson.sw.entity.repo;
 
-import de.ShopJohsnon.sw.entity.Customer;
-import de.ShopJohsnon.sw.entity.util.SingleIdEntityRepository;
+import de.ShopJohnson.sw.entity.Customer;
+import de.ShopJohnson.sw.entity.util.SingleIdEntityRepository;
 
 import javax.enterprise.context.Dependent;
 import javax.persistence.TypedQuery;

@@ -5,8 +5,8 @@ import de.ShopJohnson.sw.JohnonConfig;
 import de.ShopJohnson.sw.service.ShopOrderService;
 import de.ShopJohnson.sw.service.alternatives.AbstractPayService;
 import de.ShopJohnson.sw.ui.consts.TransactionStatus;
-import de.ShopJohsnon.sw.entity.Article;
-import de.ShopJohsnon.sw.entity.ShopOrder;
+import de.ShopJohnson.sw.entity.Article;
+import de.ShopJohnson.sw.entity.ShopOrder;
 import org.primefaces.PrimeFaces;
 
 import javax.enterprise.context.SessionScoped;

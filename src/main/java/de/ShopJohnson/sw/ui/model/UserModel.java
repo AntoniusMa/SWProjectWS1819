@@ -2,9 +2,9 @@ package de.ShopJohnson.sw.ui.model;
 
 import de.ShopJohnson.sw.service.CustomerService;
 import de.ShopJohnson.sw.service.ShopOrderService;
-import de.ShopJohsnon.sw.entity.Customer;
-import de.ShopJohsnon.sw.entity.ShopOrder;
-import de.ShopJohsnon.sw.entity.util.EntityUtils;
+import de.ShopJohnson.sw.entity.Customer;
+import de.ShopJohnson.sw.entity.ShopOrder;
+import de.ShopJohnson.sw.entity.util.EntityUtils;
 import org.primefaces.PrimeFaces;
 
 import javax.enterprise.context.SessionScoped;

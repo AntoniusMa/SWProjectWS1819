@@ -1,13 +1,9 @@
-package de.ShopJohsnon.sw.entity;
+package de.ShopJohnson.sw.entity;
 
-import de.ShopJohsnon.sw.entity.util.GeneratedIdEntity;
+import de.ShopJohnson.sw.entity.util.GeneratedIdEntity;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
-import java.util.Objects;
 
 @Entity
 public class Article extends GeneratedIdEntity {
