@@ -9,6 +9,7 @@ import javax.inject.Inject;
 import javax.jws.WebMethod;
 import javax.jws.WebService;
 import javax.transaction.Transactional;
+import javax.xml.bind.annotation.XmlTransient;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +24,7 @@ public class DiscountCodeService implements DiscountCodeIF, Serializable {
 
     @Override
     @Transactional(Transactional.TxType.REQUIRED)
+    @WebMethod(exclude = true)
     public DiscountCode createSingleDiscountCode() {
         DiscountCodeEntity dc = new DiscountCodeEntity(0.50f);
         discountCodeRepo.persist(dc);
@@ -39,6 +41,12 @@ public class DiscountCodeService implements DiscountCodeIF, Serializable {
         }
         return codeList;
     }
+
+    /**
+     * Removes DiscountCode from Database
+     * @param dc DiscountCode to remove
+     * @return removed DiscountCode
+     */
     @WebMethod(exclude = true)
     @Transactional(Transactional.TxType.REQUIRED)
     public DiscountCode removeDiscountCode (DiscountCode dc) {
@@ -46,6 +54,12 @@ public class DiscountCodeService implements DiscountCodeIF, Serializable {
         discountCodeRepo.remove(dce);
         return dc;
     }
+
+    /**
+     * Set validity of DiscountCode false
+     * @param dc Discount code to invalidate
+     * @return invalidated DiscountCode
+     */
     @WebMethod(exclude = true)
     @Transactional(Transactional.TxType.REQUIRED)
     public DiscountCode invalidateCode(DiscountCode dc) {
@@ -61,6 +75,7 @@ public class DiscountCodeService implements DiscountCodeIF, Serializable {
      * @return new DiscountCode or null
      */
     @Transactional(Transactional.TxType.REQUIRED)
+    @WebMethod(exclude = true)
     public DiscountCode generateBonusDiscountCode() {
         Random random = new Random();
         boolean decider = random.nextBoolean();

@@ -16,11 +16,21 @@ import java.io.Serializable;
 @Named
 @RequestScoped
 public class RegistrationModel implements Serializable {
+
     @Inject private CustomerService customerService;
+
     private Customer customer = new Customer();
+
     private Address address = new Address();
+
     private String registrationStatus;
+
     private String registrationMessage;
+
+
+    /**
+     * Create and persist new Customer
+     */
     public void registerCustomer() {
         customer.setAddress(address);
         if(checkEmptyInputs()) {
@@ -35,7 +45,7 @@ public class RegistrationModel implements Serializable {
         catch (Exception e) {
             registrationStatus = RegistrationStatus.FAILED.toString();
             if(e.getCause().getCause() instanceof ConstraintViolationException) {
-                registrationMessage = "Username already exists";
+                registrationMessage = "Username exists already";
             }
             else {
                 registrationMessage = "Couldn't register due to internal database error";
@@ -44,6 +54,10 @@ public class RegistrationModel implements Serializable {
 
     }
 
+    /**
+     * Check if any inputs that are required are empty
+     * @return Check condition false or true
+     */
     private boolean checkEmptyInputs() {
         if(customer.getUsername() == null) {
             registrationMessage = "Missing entry for username";

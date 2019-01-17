@@ -40,7 +40,7 @@ SingleIdEntityRepository<K, E extends SingleIdEntity> implements Serializable {
     public void remove(E entity){
         em.remove(entity);
     }
-        
+
     public E getById(K key){
         E entity = em.find(getEntityClass(), key);
         return entity;

@@ -8,6 +8,10 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Alternative;
 import java.io.Serializable;
 
+
+/**
+ * Substitution for PayJohnson Webservice
+ */
 @ApplicationScoped
 @Alternative
 public class PayServiceTest implements AbstractPayService, Serializable {

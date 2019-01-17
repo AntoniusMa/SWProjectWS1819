@@ -19,14 +19,19 @@ public class ShopModel implements Serializable {
 
     private List<Article> articleList;
 
-
-
+    /**
+     * Function used to fill the database with dummy data
+     */
     public void fillEmptyDataBase() {
         for (int i = 0; i < 10; i++) {
             articleService.addArticleToRange(new Article("Nicer artikel" + i, 20f, "Broc",
                                     "https://i.ytimg.com/vi/Ir7UmJ_foHs/hqdefault.jpg"));
         }
     }
+
+    /**
+     * Loads all articles
+     */
     @PostConstruct
     void loadArticles() {
         this.articleList = articleService.getAllArticles();

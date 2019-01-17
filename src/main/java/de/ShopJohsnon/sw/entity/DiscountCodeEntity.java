@@ -6,7 +6,9 @@ import javax.persistence.Entity;
 
 @Entity
 public class DiscountCodeEntity extends RandomIdEntity {
+
     private boolean isValid = true;
+
     private float amount;
 
     public DiscountCodeEntity() {

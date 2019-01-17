@@ -21,7 +21,11 @@ public class ShopOrderService {
     @Inject
     CustomerService customerService;
 
-
+    /**
+     * Persists a ShopOrder and adds it to the orders list of its Customer
+     * @param shopOrder ShopOrder to persist
+     * @return persisted ShopOrder
+     */
     @Transactional(Transactional.TxType.REQUIRED)
     public ShopOrder persistShopOrder(ShopOrder shopOrder) {
         shopOrder.setCustomer(customerService.getCustomerByName(shopOrder.getCustomer().getUsername()));
@@ -30,6 +34,12 @@ public class ShopOrderService {
         customerService.persist(shopOrder.getCustomer());
         return shopOrder;
     }
+
+    /**
+     * Gets all ShopOrders of a Custom
+     * @param customer Customer who requests his ShopOrders
+     * @return List of all ShopOrders customer
+     */
     public List<ShopOrder> getCustomersOrders(Customer customer) {
         TypedQuery<ShopOrder> query = entityManager.createQuery(
                 "select o from ShopOrder as o where o.customer.id = :customer", ShopOrder.class

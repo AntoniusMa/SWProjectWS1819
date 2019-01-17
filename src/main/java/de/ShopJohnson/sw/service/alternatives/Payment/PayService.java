@@ -12,6 +12,9 @@ import javax.enterprise.inject.Alternative;
 import javax.inject.Inject;
 import java.io.Serializable;
 
+/**
+ * Real implementation for the partner service from PayJohnson (Jonathan Evenari)
+ */
 @ApplicationScoped
 @Alternative
 public class PayService implements AbstractPayService, Serializable {
@@ -21,11 +24,22 @@ public class PayService implements AbstractPayService, Serializable {
 
     private PaymentServiceService paymentServiceService = new PaymentServiceService();
     private PaymentService paymentService = paymentServiceService.getPaymentServicePort();
+
+    /**
+     * Function to request a transaction from PayJohnson
+     * @param so ShopOrder Object that should be paid
+     * @return String that tells about the status of the transaction
+     */
     @Override
     public String instructJohnsonPayment(ShopOrder so) {
         logger.info("Instructing Johnson payment");
+
         String ts = TransactionStatus.TRANSACTION_NOT_CONFIRMED;
+
         TransactionDTO transactionDTO = new TransactionDTO();
+
+        // Fill transactionDTO with data
+
         transactionDTO.setAmount(so.getBillingAmount());
         transactionDTO.setSourceUserName(so.getShopTransaction().getSourceName());
         transactionDTO.setSourceUserPassword("test");
@@ -35,6 +49,7 @@ public class PayService implements AbstractPayService, Serializable {
             ts = TransactionStatus.TRANSACTION_DATA_CONFIRMED;
         }
         catch (Exception e) {
+
             logger.warn("Couldn't get the PayJohnson");
         }
         return ts;

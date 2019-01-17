@@ -13,12 +13,16 @@ public class Customer extends GeneratedIdEntity {
 
     @Column(nullable = false)
     private String firstname;
+
     @Column(nullable = false)
     private String lastname;
+
     @Column(unique = true, nullable = false)
     private String username;
+
     @Column(nullable = false)
     private String password;
+
     @Column(nullable = false)
     private String salt;
 
@@ -92,6 +96,7 @@ public class Customer extends GeneratedIdEntity {
     public void setShopOrders(List<ShopOrder> shopOrders) {
         this.shopOrders = shopOrders;
     }
+
     public boolean addShopOrder(ShopOrder shopOrder) {
         return shopOrders.add(shopOrder);
     }

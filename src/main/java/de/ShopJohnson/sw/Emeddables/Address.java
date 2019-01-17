@@ -2,10 +2,12 @@ package de.ShopJohnson.sw.Emeddables;
 
 import javax.persistence.Embeddable;
 
+
+
 @Embeddable
 public class Address {
     
-    private String plz;
+    private String zipCode;
     private String city;
     private String street;
     private String country;
@@ -15,18 +17,18 @@ public class Address {
     }
 
     public Address(String plz, String city, String street, String country) {
-        this.plz = plz;
+        this.zipCode = plz;
         this.city = city;
         this.street = street;
         this.country = country;
     }
 
-    public String getPlz() {
-        return plz;
+    public String getZipCode() {
+        return zipCode;
     }
 
-    public void setPlz(String plz) {
-        this.plz = plz;
+    public void setZipCode(String plz) {
+        this.zipCode = plz;
     }
 
     public String getCity() {
@@ -55,7 +57,7 @@ public class Address {
     @Override
     public String toString() {
         return "Address{" +
-                " PLZ="  + this.getPlz() +
+                " Zip code="  + this.getZipCode() +
                 " City=" + this.getCity() +
                 " Street" + this.getStreet() +
                 " Country" + this.getCountry() + "}";

@@ -7,6 +7,15 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 
+
+/**
+ * DTO for discount codes
+ *
+ * Could also send the DiscountCodeEntity, but users of the webservice don't need to see the whole entity and shouldn't
+ * see all attributes of the entity
+ *
+ */
+
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 public class DiscountCode implements Serializable {

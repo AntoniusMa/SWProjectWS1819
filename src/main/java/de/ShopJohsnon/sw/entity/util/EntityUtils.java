@@ -8,7 +8,14 @@ import java.security.SecureRandom;
 import java.util.UUID;
 
 public class EntityUtils {
-
+    /**
+     * Generate hash value from password to store it in the database
+     * @param password
+     * @param salt
+     * @param algorithm
+     * @return hashed password
+     * @throws EntityUtilException
+     */
     public static String hashPassword(String password, String salt, String algorithm) throws EntityUtilException {
         try {
             MessageDigest hashAlgo = MessageDigest.getInstance(algorithm);
@@ -22,7 +29,12 @@ public class EntityUtils {
             throw new EntityUtilException("Could not hash password", ex);
         }
     }
-    
+
+    /**
+     * Creates a random String
+     * @param byteLength Length of the String
+     * @return random String
+     */
     public static String createRandomString(int byteLength) {
         SecureRandom zufallsgenerator = new SecureRandom();
         byte[] bytes = new byte[byteLength];

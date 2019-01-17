@@ -19,12 +19,17 @@ import org.jboss.logging.Logger;
 @Named
 @SessionScoped
 public class CartModel implements Serializable {
+
     private String payJohnsonName;
+
     private ShopOrder shopOrder;
+
     private String discountCode;
+
     private float discountFactor = 1.0f;
 
     private String discountMeme = "";
+
     @Inject UserModel userModel;
 
 
@@ -42,12 +47,27 @@ public class CartModel implements Serializable {
     public CartModel() {
         this.shopOrder = new ShopOrder(new ArrayList<Article>());
     }
+
+    /**
+     * Adds article to shopping cart
+     * @param a Article to add
+     */
     public void addArticleToCart(Article a) {
+        logger.info("Adding article");
         shopOrder.addArticle(a);
     }
+
+    /**
+     * Remove article from shopping cart
+     * @param a Article to remove
+     */
     public void removeArticleFromCart(Article a) {
         shopOrder.removeArticle(a);
     }
+
+    /**
+     * Final confirmation to order
+     */
     public void buy() {
         PrimeFaces pf = PrimeFaces.current();
 //        if(!userModel.isLoggedIn()) {
@@ -64,6 +84,10 @@ public class CartModel implements Serializable {
 
         pf.executeScript("PF('pay_dialog_success').show()");
     }
+
+    /**
+     * Applys discount code on the current ShopOrder
+     */
     public void applyDiscountCode() {
         if(discountFactor < 1 ) {
             discountMeme = "https://www.meme-arsenal.com/memes/12382393052b1ef12badff29cf602857.jpg";
@@ -76,10 +100,6 @@ public class CartModel implements Serializable {
     public void hideDiscountDialog() {
         PrimeFaces pf = PrimeFaces.current();
         pf.executeScript("PF('discount_dialog').hide()");
-    }
-    public String getPayJohnsonConfirmation() {
-
-        return null;
     }
 
     public String getPayJohnsonName() {

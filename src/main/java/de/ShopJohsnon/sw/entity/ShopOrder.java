@@ -13,8 +13,10 @@ public class ShopOrder extends GeneratedIdEntity {
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Customer customer;
+
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Article> articles;
+
     @Embedded
     private ShopTransaction shopTransaction;
 
@@ -25,10 +27,12 @@ public class ShopOrder extends GeneratedIdEntity {
     public ShopOrder() {
 
     }
+
     public ShopOrder(List<Article> articles) {
         this.articles = articles;
         calculateBillingAmount();
     }
+
     public ShopOrder(Customer customer, List<Article> articles, ShopTransaction shopTransaction) {
         this.customer = customer;
         this.articles = articles;
@@ -36,16 +40,22 @@ public class ShopOrder extends GeneratedIdEntity {
         calculateBillingAmount();
         this.shopTransaction = shopTransaction;
     }
+
+    /**
+     * Calculates the billing amount of the ShopOrder by adding the amount of every Article in the Article List
+     */
     private void calculateBillingAmount() {
         this.billingAmount = 0;
         for (Article a : this.articles) {
             this.billingAmount += a.getPrice();
         }
     }
+
     public void addArticle(Article a) {
         articles.add(a);
         this.billingAmount += a.getPrice();
     }
+
     public void removeArticle(Article a) {
         if(articles.isEmpty()) {
             return;

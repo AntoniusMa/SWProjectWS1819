@@ -19,6 +19,7 @@ public class Article extends GeneratedIdEntity {
     private float price;
 
     private String description;
+
     private String picturePath;
 
     public Article() {}
@@ -27,11 +28,13 @@ public class Article extends GeneratedIdEntity {
         this.artName = artName;
         this.price = price;
     }
+
     public Article(String artName, float price, String description) {
         this.artName = artName;
         this.price = price;
         this.description = description;
     }
+
     public Article(String artName, float price, String description, String picturePath) {
         this.artName = artName;
         this.price = price;

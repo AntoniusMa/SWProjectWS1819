@@ -23,14 +23,22 @@ public class UserModel implements Serializable {
     ShopOrderService shopOrderService;
 
     private boolean loggedIn = false;
+
     private Customer customer = new Customer();
+
     private String loginStatus = "";
+
     private List<ShopOrder> shopOrders;
 
     public String login() {
 
         return "userPage.xhtml";
     }
+
+    /**
+     * Function that decides on which page to forward when trying to go to user page
+     * @return if logged in: user else login
+     */
     public String forwardToUserPageOrLogin() {
         PrimeFaces pf = PrimeFaces.current();
         if (loggedIn) {
@@ -41,6 +49,11 @@ public class UserModel implements Serializable {
         }
 
     }
+
+    /**
+     * Tries to login redirects to userPage if successful
+     * @return
+     */
     public String tryLogin() {
 
         try {
@@ -75,6 +88,7 @@ public class UserModel implements Serializable {
         customer = customerService.merge(customer);
         shopOrders = customer.getShopOrders();
     }
+
     public Customer getCustomer() {
         return customer;
     }

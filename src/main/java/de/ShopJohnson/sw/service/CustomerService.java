@@ -24,6 +24,11 @@ public class CustomerService {
     @Inject
     CustomerRepo customerRepo;
 
+    /**
+     * Hash password and register a new Customer
+     * @param c Customer to register
+     * @return registered Customer or null (if something goes wrong)
+     */
     @Transactional(Transactional.TxType.REQUIRED)
     public Customer register(Customer c) {
         c.setSalt(EntityUtils.createRandomString(32));
@@ -33,38 +38,79 @@ public class CustomerService {
         catch (Exception e) {
             return null;
         }
-        customerRepo.persist(c);
+        c = persist(c);
         return c;
     }
 
+    /**
+     * Unregister an already registered Customer
+     * @param c Customer to unregister
+     * @return unregistered Customer
+     */
     @Transactional(Transactional.TxType.REQUIRED)
     public Customer unregister(Customer c) {
-        c = customerRepo.merge(c);
+        c = customerRepo.getById(c.getId());
         customerRepo.remove(c);
 
         return c;
     }
+
+    /**
+     * Makes persist available without specifically injecting the repository
+     * @param c Customer to persist
+     * @return persisted Customer
+     */
     @Transactional(Transactional.TxType.REQUIRED)
     public Customer persist(Customer c) {
         customerRepo.persist(c);
         return c;
     }
+
+    /**
+     * Makes merge available without specifically injecting the repository
+     * @param c Customer to persist
+     * @return merged Customer
+     */
     public Customer merge(Customer c) {
         return customerRepo.merge(c);
     }
 
-    public Customer getCustomerByName(String name) {
-        return customerRepo.getCustomerByUsername(name);
+    /**
+     * Gets Customer by username
+     * @param username of the Customer
+     * @return found Customer
+     */
+    public Customer getCustomerByName(String username) {
+        return customerRepo.getCustomerByUsername(username);
     }
+
+    /**
+     * Gets Customer with username and hashed password
+     * @param username username of the Customer
+     * @param password hashed password of the Customer
+     * @return found Customer
+     */
     public Customer getCustomerWithLogin(String username, String password){
         if(username==null || password == null) {
             return null;
         }
         return customerRepo.getCustomerByLogin(username, password);
     }
+
+    /**
+     * Gets Customer by id
+     * @param customerId id of the Customer
+     * @return found Customer
+     */
     public Customer getCustomerById(long customerId) {
         return customerRepo.getById(customerId);
     }
+
+    /**
+     * Changes data of the Customer
+     * @param c Customer Object with changed data
+     * @return changed Customer
+     */
     public Customer changeCustomerData(Customer c) {
         return customerRepo.merge(c);
     }

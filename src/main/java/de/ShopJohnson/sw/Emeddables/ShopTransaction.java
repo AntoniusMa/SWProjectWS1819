@@ -3,6 +3,14 @@ package de.ShopJohnson.sw.Emeddables;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
+
+/**
+ * Embeddable for PayJohnson Transaction DTO
+ *
+ * A ShopOrder will not store the full DTO, that would be redundant. from PayJohnson but it should hold at least
+ * the sourceName of the transaction as well as whether the transaction was successfull or not
+ *
+ */
 @Embeddable
 public class ShopTransaction {
 
