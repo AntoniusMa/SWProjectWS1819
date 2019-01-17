@@ -38,15 +38,10 @@
                     </h:panelGrid>
                 </f:view>
                 <h:form id="orders-form">
+                    <h2>Your orders:</h2>
                     <p:commandButton value="Get orders" action="#{userModel.getOrders()}" update="orders-form" />
                     <p:repeat value="#{userModel.shopOrders}" var="so">
                         <h:panelGrid columns="2" cellpadding="5" style="width:100%">
-                            <h:outputText value="Article: " />
-                            <h:outputText value="#{so.articles.get(0)}" style="font-weight: bold"/>
-
-                            <h:outputText value="Price:" />
-                            <h:outputText value="#{so.billingAmount}" style="font-weight: bold"/>
-                            <h:outputText value="Order number" />
                             <h:outputText value="#{so}" style="font-weight: bold">
                                 <f:converter converterId="ShopOrderConverter" />
                             </h:outputText>

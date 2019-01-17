@@ -3,6 +3,7 @@ package de.ShopJohnson.sw.service;
 import de.ShopJohnson.sw.DTO.DiscountCode;
 import de.ShopJohnson.sw.entity.DiscountCodeEntity;
 import de.ShopJohnson.sw.entity.repo.DiscountCodeRepo;
+import de.ShopJohnson.sw.service.exception.DiscountCodeException;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -33,10 +34,14 @@ public class DiscountCodeService implements DiscountCodeIF, Serializable {
     //@WebMethod
     @Override
     @Transactional(Transactional.TxType.REQUIRED)
-    public List<DiscountCode> createMultipleDiscountCodes(int amount) {
+    public List<DiscountCode> createMultipleDiscountCodes(int amount) throws DiscountCodeException {
         List<DiscountCode> codeList = new ArrayList<DiscountCode>();
-        for(int i=0; i < amount; i++) {
-            codeList.add(createSingleDiscountCode());
+        try {
+            for (int i = 0; i < amount; i++) {
+                codeList.add(createSingleDiscountCode());
+            }
+        } catch (Exception e) {
+            throw new DiscountCodeException();
         }
         return codeList;
     }
