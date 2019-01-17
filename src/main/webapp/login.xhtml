@@ -20,7 +20,7 @@
                         <p:outputLabel for="username" value="Username:"/>
                         <p:inputText id="username" value="#{userModel.customer.username}" placeholder="Username"/>
                         <p:outputLabel for="password" value="Password:" />
-                        <p:inputText id="password" value="#{userModel.customer.password}" placeholder="Password"/>
+                        <p:inputText id="password" type="password" value="#{userModel.customer.password}" placeholder="Password"/>
                         <p:commandButton value="Login" update="login-form" action="#{userModel.tryLogin}"/>
                         <p:outputLabel style="color: red" value="#{userModel.loginStatus}" />
                     </h:panelGrid>

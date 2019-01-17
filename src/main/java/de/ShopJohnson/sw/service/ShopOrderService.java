@@ -46,4 +46,7 @@ public class ShopOrderService {
         query.setParameter("customer", customer.getId());
         return  query.getResultList();
     }
+    public ShopOrder getById(long id) {
+        return entityManager.find(ShopOrder.class, id);
+    }
 }

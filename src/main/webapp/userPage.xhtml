@@ -46,6 +46,10 @@
 
                             <h:outputText value="Price:" />
                             <h:outputText value="#{so.billingAmount}" style="font-weight: bold"/>
+                            <h:outputText value="Order number" />
+                            <h:outputText value="#{so}" style="font-weight: bold">
+                                <f:converter converterId="ShopOrderConverter" />
+                            </h:outputText>
                         </h:panelGrid>
                         <hr />
                     </p:repeat>
