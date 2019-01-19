@@ -4,6 +4,7 @@ import de.ShopJohnson.sw.JohnonConfig;
 import de.ShopJohnson.sw.service.alternatives.AbstractPayService;
 import de.ShopJohnson.sw.ui.consts.TransactionStatus;
 import de.ShopJohnson.sw.entity.ShopOrder;
+
 import de.jevenari.sw.service.*;
 import org.jboss.logging.Logger;
 
@@ -26,30 +27,44 @@ public class PayService implements AbstractPayService, Serializable {
     private PaymentService paymentService = paymentServiceService.getPaymentServicePort();
 
     /**
-     * Function to request a transaction from PayJohnson
-     * @param so ShopOrder Object that should be paid
-     * @return String that tells about the status of the transaction
+     * Instruct PayJohnson partner system to create and confirm a transaction
+     * @param shopOrder The order
+     * @param discountFactor discount factor of the Order
+     * @param payJohnsonId Pay Johnson ID of the Customer
+     * @param payJohnsonPassword Pay Johnson password of the Customer
+     * @return Status string that indicates the outcome of the PayJohnson instruction
      */
     @Override
-    public String instructJohnsonPayment(ShopOrder so) {
+    public String instructJohnsonPayment(ShopOrder shopOrder ,float discountFactor, String payJohnsonId, String payJohnsonPassword) {
         logger.info("Instructing Johnson payment");
 
-        String ts = TransactionStatus.TRANSACTION_NOT_CONFIRMED;
+        String ts;
 
         TransactionDTO transactionDTO = new TransactionDTO();
 
         // Fill transactionDTO with data
 
-        transactionDTO.setAmount(so.getBillingAmount());
-        transactionDTO.setSourceUserName(so.getShopTransaction().getSourceName());
-        transactionDTO.setSourceUserPassword("test");
+        transactionDTO.setAmount(shopOrder.getBillingAmount() * discountFactor);
+        transactionDTO.setSourceUserName(payJohnsonId);
+        transactionDTO.setSourceUserPassword(payJohnsonPassword);
         transactionDTO.setTargetUserName(JohnonConfig.SHOP_PAYJOHNSON_ID);
+        logger.info(transactionDTO.getSourceUserName());
+        logger.info(transactionDTO.getTargetUserName());
+        logger.info(transactionDTO.getSourceUserPassword());
         try {
             transactionDTO = paymentService.instructPayment(transactionDTO);
+            logger.info(transactionDTO.isStatus());
+            shopOrder.getShopTransaction().setTransactionId(transactionDTO.getTransactionId());
             ts = TransactionStatus.TRANSACTION_DATA_CONFIRMED;
         }
-        catch (Exception e) {
 
+        catch (BankingException_Exception be) {
+            logger.warn(be.getFaultInfo().getMessage());
+            ts = TransactionStatus.TRANSACTION_NOT_CONFIRMED;
+        }
+
+        catch (Exception e) {
+            ts = TransactionStatus.COULD_NOT_REACH_PAY_JOHNSON;
             logger.warn("Couldn't get the PayJohnson");
         }
         return ts;

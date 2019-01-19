@@ -1,7 +1,10 @@
 package de.ShopJohnson.sw.ui.model;
 
+import de.ShopJohnson.sw.DTO.DiscountCode;
 import de.ShopJohnson.sw.Emeddables.ShopTransaction;
 import de.ShopJohnson.sw.JohnonConfig;
+import de.ShopJohnson.sw.entity.DiscountCodeEntity;
+import de.ShopJohnson.sw.entity.repo.DiscountCodeRepo;
 import de.ShopJohnson.sw.service.ShopOrderService;
 import de.ShopJohnson.sw.service.alternatives.AbstractPayService;
 import de.ShopJohnson.sw.ui.consts.TransactionStatus;
@@ -10,6 +13,9 @@ import de.ShopJohnson.sw.entity.ShopOrder;
 import org.primefaces.PrimeFaces;
 
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
+import javax.faces.convert.FacesConverter;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
@@ -22,9 +28,11 @@ public class CartModel implements Serializable {
 
     private String payJohnsonName;
 
+    private String payJohnsonPw;
+
     private ShopOrder shopOrder;
 
-    private String discountCode;
+    private String discountCodeInput;
 
     private float discountFactor = 1.0f;
 
@@ -32,13 +40,14 @@ public class CartModel implements Serializable {
 
     @Inject UserModel userModel;
 
-    @Inject LoginModel loginModel;
-
     @Inject
     AbstractPayService payService;
 
     @Inject
     ShopOrderService shopOrderService;
+
+    @Inject
+    DiscountCodeRepo discountCodeRepo;
 
     @Inject
     Logger logger;
@@ -70,36 +79,86 @@ public class CartModel implements Serializable {
      */
     public void buy() {
         PrimeFaces pf = PrimeFaces.current();
-//        if(!loginModel.isLoggedIn()) {
-//            return;
-//        }
-        shopOrder.setCustomer(userModel.getCustomer());
-        ShopTransaction shopTransaction = new ShopTransaction(JohnonConfig.SHOP_PAYJOHNSON_ID, TransactionStatus.TRANSACTION_NOT_CONFIRMED);
-        shopOrder.setShopTransaction(shopTransaction);
-        shopOrder.getShopTransaction().setPayStatus(payService.instructJohnsonPayment(shopOrder));
-        logger.info(shopOrder.getShopTransaction());
-        if(shopTransaction.getPayStatus() == TransactionStatus.TRANSACTION_DATA_CONFIRMED) {
-            shopOrderService.persistShopOrder(shopOrder);
-        }
 
-        pf.executeScript("PF('pay_dialog_success').show()");
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        FacesMessage.Severity messageSeverity = FacesMessage.SEVERITY_ERROR;
+        String messageSummary = "Could not submit order";
+        String messageDetail = "";
+
+
+        if(!userModel.isLoggedIn()) {
+            return;
+        }
+        shopOrder.setCustomer(userModel.getCustomer());
+        ShopTransaction shopTransaction = new ShopTransaction(payJohnsonName, TransactionStatus.TRANSACTION_NOT_CONFIRMED);
+        shopOrder.setShopTransaction(shopTransaction);
+        String status = payService.instructJohnsonPayment(shopOrder, discountFactor, payJohnsonName, payJohnsonPw);
+        if(status.equals(TransactionStatus.TRANSACTION_DATA_CONFIRMED)) {
+            shopOrder.setBillingAmount(shopOrder.getBillingAmount() * discountFactor);
+            shopOrder.getShopTransaction().setPayStatus(status);
+            shopOrderService.persistShopOrder(shopOrder);
+            pf.executeScript("PF('pay_dialog_success').show()");
+        }
+        else {
+            if (status.equals(TransactionStatus.TRANSACTION_NOT_CONFIRMED)) {
+                messageDetail = "Pay Johnson could not confirm your data, check username and password";
+            }
+            else if (status.equals(TransactionStatus.COULD_NOT_REACH_PAY_JOHNSON)) {
+                messageDetail = "Pay Johnson did not respond, please try later";
+            }
+            facesContext.addMessage(null, new FacesMessage(messageSeverity, messageSummary, messageDetail));
+        }
     }
 
     /**
      * Applys discount code on the current ShopOrder
      */
     public void applyDiscountCode() {
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        FacesMessage.Severity messageSeverity = FacesMessage.SEVERITY_INFO;
+        String messageSummary = "";
+        String messageDetail = "";
         if(discountFactor < 1 ) {
-            discountMeme = "https://www.meme-arsenal.com/memes/12382393052b1ef12badff29cf602857.jpg";
+            messageSeverity = FacesMessage.SEVERITY_WARN;
+            messageDetail = "Failed";
+            messageSummary = "Can not apply multiple discount codes";
         }
         else {
-            discountFactor = 0.5f;
-            discountMeme = "https://pbs.twimg.com/media/DrB6e12WoAAUjUg.jpg";
+            DiscountCodeEntity discountCodeEntity = discountCodeRepo.getById(discountCodeInput);
+            if (discountCodeEntity==null){
+                messageSeverity = FacesMessage.SEVERITY_ERROR;
+                messageSummary = "Failed";
+                messageDetail = "The discount code does not exist";
+            }
+            else if(discountCodeEntity.isValid()) {
+                messageSummary = "Success";
+                messageDetail = "Successfully applied discount code";
+
+                discountFactor = discountCodeEntity.getAmount();
+                shopOrder.setDiscountCode(discountCodeEntity);
+            }
+            else {
+                messageSeverity = FacesMessage.SEVERITY_ERROR;
+                messageSummary = "Failed";
+                messageDetail = "The discount code is invalid";
+                logger.info("Discount Code invalid");
+            }
         }
+
+        facesContext.addMessage(null, new FacesMessage(messageSeverity, messageSummary, messageDetail));
+
     }
-    public void hideDiscountDialog() {
-        PrimeFaces pf = PrimeFaces.current();
-        pf.executeScript("PF('discount_dialog').hide()");
+
+    public String backToShop() {
+        resetModel();
+        return "/shop.xhtml?faces-redirect=true";
+    }
+    private void resetModel() {
+        payJohnsonName = null;
+        payJohnsonPw = null;
+        discountCodeInput = null;
+        shopOrder = new ShopOrder(new ArrayList<Article>());
+        discountFactor = 1.0f;
     }
 
     public String getPayJohnsonName() {
@@ -118,12 +177,12 @@ public class CartModel implements Serializable {
         this.shopOrder = shopOrder;
     }
 
-    public String getDiscountCode() {
-        return discountCode;
+    public String getDiscountCodeInput() {
+        return discountCodeInput;
     }
 
-    public void setDiscountCode(String discountCode) {
-        this.discountCode = discountCode;
+    public void setDiscountCodeInput(String discountCode) {
+        this.discountCodeInput = discountCode;
     }
 
     public float getDiscountFactor() {
@@ -140,5 +199,13 @@ public class CartModel implements Serializable {
 
     public void setDiscountMeme(String discountMeme) {
         this.discountMeme = discountMeme;
+    }
+
+    public String getPayJohnsonPw() {
+        return payJohnsonPw;
+    }
+
+    public void setPayJohnsonPw(String payJohnsonPw) {
+        this.payJohnsonPw = payJohnsonPw;
     }
 }

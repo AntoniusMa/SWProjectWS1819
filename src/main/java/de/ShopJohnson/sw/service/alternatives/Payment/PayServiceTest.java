@@ -17,13 +17,13 @@ import java.io.Serializable;
 public class PayServiceTest implements AbstractPayService, Serializable {
 
     @Override
-    public String instructJohnsonPayment(ShopOrder shopTransaction) {
+    public String instructJohnsonPayment(ShopOrder shopOrder,float discountFactor, String payJohnsonId, String payJohnsonPassword) {
         try {
             Thread.sleep(1000);
         }
         catch (Exception e) {
 
         }
-        return TransactionStatus.TRANSACTION_DATA_CONFIRMED;
+        return TransactionStatus.TRANSACTION_NOT_CONFIRMED;
     }
 }

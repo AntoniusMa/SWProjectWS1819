@@ -28,6 +28,7 @@ SingleIdEntityRepository<K, E extends SingleIdEntity> implements Serializable {
     @PersistenceContext(unitName=PERSISTENCE_UNIT_NAME)
     protected EntityManager em;
 
+    @Transactional(TxType.REQUIRED)
     public void persist(E entity){
         em.persist(entity);
     }

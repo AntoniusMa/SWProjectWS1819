@@ -4,6 +4,7 @@ import de.ShopJohnson.sw.Emeddables.ShopTransaction;
 import de.ShopJohnson.sw.entity.util.GeneratedIdEntity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Entity
@@ -18,10 +19,11 @@ public class ShopOrder extends GeneratedIdEntity {
     private List<Article> articles;
 
     @Embedded
+    @NotNull
     private ShopTransaction shopTransaction;
 
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private DiscountCodeEntity discountCode;
 
     public ShopOrder() {

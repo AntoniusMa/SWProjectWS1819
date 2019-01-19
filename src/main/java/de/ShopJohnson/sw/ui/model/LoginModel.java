@@ -1,11 +1,12 @@
 package de.ShopJohnson.sw.ui.model;
 
+import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 import java.io.Serializable;
 
 @Named
-@SessionScoped
+@RequestScoped
 public class LoginModel implements Serializable {
 
     private String username;

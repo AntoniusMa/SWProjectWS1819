@@ -16,39 +16,48 @@
                         <h4>Pay Johnson confirmed your data, we are waiting for the confirmation <br/>of the transaction and
                             will send your stuff afterwards</h4>
                     </div>
+                    <p:commandButton value="Back to JohnsonShop" action="#{B}"
                 </p:dialog>
             </h:form>
+
             <h:form id="cart-form">
+                <p:growl id = "discount-growl" showDetail="true" />
                 <div align="center" >
+                    <h2>Enter your PayJohnson ID for ordering</h2>
                     <h:panelGrid columns="2" cellpadding="5">
-                        <h:outputLabel for="payJohnsonId" value="Pay Johnson ID"/>
-                        <p:inputText id="payJohnsonId" value="#{cartModel.payJohnsonName}">
-                            <p:ajax event="keyup"  update="buy-button"/>
-                        </p:inputText>
+                        <p:outputPanel>
+                            <p:outputLabel indicateRequired="true"  for="payJohnsonId"  value="Pay Johnson ID"/>
+                            <p:inputText id="payJohnsonId" style="margin-left: 5px" value="#{cartModel.payJohnsonName}">
+                                <p:ajax event="keyup"  update="buy-button"/>
+                            </p:inputText>
+                        </p:outputPanel>
+                        <p:outputPanel>
+                            <p:outputLabel indicateRequired="true"  for="payJohnsonPw" value="Pay Johnson Password" />
+                            <p:inputText type="password" style="margin-left: 5px" id="payJohnsonPw" value="#{cartModel.payJohnsonPw}">
+                                <p:ajax event="keyup" update="buy-button" />
+                            </p:inputText>
+                        </p:outputPanel>
                         <p:outputLabel value="Billing amount:   " />
-                        <h:outputText value="#{cartModel.shopOrder.billingAmount * cartModel.discountFactor}">
+                        <h:outputText id="orderAmount" value="#{cartModel.shopOrder.billingAmount * cartModel.discountFactor}">
                             <f:convertNumber minFractionDigits="2" type="currency" currencySymbol="€" locale="de-DE" />
                         </h:outputText>
                         <p:outputLabel for="discountCode" value="Discount Code:" />
-                        <p:inputText id="discountCode" value="#{cartModel.discountCode}" placeholder="Discount code">
+                        <p:inputText id="discountCode" value="#{cartModel.discountCodeInput}" placeholder="Discount code">
                             <p:ajax event="keyup"  update="discount-button"/>
                         </p:inputText>
 
                     </h:panelGrid>
-                    <p:commandButton id="discount-button" action="#{cartModel.applyDiscountCode()}" value="Apply"
-                                     style="width: 20%" disabled="#{cartModel.discountCode == null}"
-                                     update="discount-dialog"
-                                     oncomplete="$('#discount-dialog').show('fade');
-                                     setTimeout(function() {
-                                     $('#discount-dialog').hide('fade'); }, 3000);"
-                    />
+                    <p:commandButton id="discount-button" action="#{cartModel.applyDiscountCode()}" value="Apply Discount Code"
+                                     style="width: 20%" disabled="#{cartModel.discountCodeInput == null}"
+                                     update="@form"/>
                     <p:commandButton id="buy-button" action="#{cartModel.buy}" value="Buy" widgetVar="buyButton"
                                      style="background-color: green; width: 20%; color: white;"
                                      disabled="#{cartModel.shopOrder.articles.size()==0
-                                                || cartModel.payJohnsonName == null}"
+                                                || cartModel.payJohnsonName == null
+                                                || cartModel.payJohnsonPw == null}"
                                      onclick="PF('buyButton').disable()"
                                      oncomplete="PF('buyButton').enable()"
-                                     update="cart-form"/>
+                                     update="@form"/>
                 </div>
                 <p:repeat value="#{cartModel.shopOrder.articles}" var="article">
                     <h:panelGrid columns="3" style="width:100%">
@@ -74,22 +83,7 @@
 
             </h:form>
 
-                <p:dialog id="pay-dialog-failure" position="center" widgetVar="pay_dialog_failure" modal="true" resizable="false"
-                          header="Pay Johnson confirmation failed" showEffect="fade" hideEffect="fade">
-                    <div align="center">
-                        <h4>Pay Johnson could not confirm your data please try again</h4>
-                    </div>
-                </p:dialog>
 
-                <p:dialog id="discount-dialog" draggable="false" closable="true" resizable="false" effect="slide"
-                          widgetVar="discount_dialog">
-                    <div align="center">
-                        <div align="center">
-                            <p:commandButton value="Hide" style="width: 20%; background-color: red" action="#{cartModel.hideDiscountDialog()}" />
-                        </div>
-                        <h:graphicImage style="width: 40%" value="#{cartModel.discountMeme}" />
-                    </div>
-                </p:dialog>
         </ui:define>
 
     </ui:composition>

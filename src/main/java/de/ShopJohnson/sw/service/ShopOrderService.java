@@ -1,7 +1,9 @@
 package de.ShopJohnson.sw.service;
 
+import de.ShopJohnson.sw.DTO.DiscountCode;
 import de.ShopJohnson.sw.JohnonConfig;
 import de.ShopJohnson.sw.entity.Customer;
+import de.ShopJohnson.sw.entity.DiscountCodeEntity;
 import de.ShopJohnson.sw.entity.ShopOrder;
 
 import javax.enterprise.context.RequestScoped;
@@ -29,13 +31,21 @@ public class ShopOrderService {
     public ShopOrder persistShopOrder(ShopOrder shopOrder) {
         shopOrder.setCustomer(customerService.getCustomerByName(shopOrder.getCustomer().getUsername()));
         shopOrder.getCustomer().addShopOrder(shopOrder);
+        DiscountCodeEntity dc = null;
+        if(shopOrder.getDiscountCode() != null) {
+            dc = entityManager.merge(shopOrder.getDiscountCode());
+        }
+        shopOrder.setDiscountCode(dc);
+        if(dc != null) {
+            dc.setValid(false);
+        }
         entityManager.persist(shopOrder);
         customerService.persist(shopOrder.getCustomer());
         return shopOrder;
     }
 
     /**
-     * Gets all ShopOrders of a Custom
+     * Gets all ShopOrders of a Customer
      * @param customer Customer who requests his ShopOrders
      * @return List of all ShopOrders customer
      */

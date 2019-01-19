@@ -17,6 +17,7 @@ public class ShopTransaction {
 
     private String sourceName;
     private String payStatus;
+    private String transactionId;
 
     public ShopTransaction() {
 
@@ -41,6 +42,14 @@ public class ShopTransaction {
 
     public void setPayStatus(String payStatus) {
         this.payStatus = payStatus;
+    }
+
+    public String getTransactionId() {
+        return transactionId;
+    }
+
+    public void setTransactionId(String transactionId) {
+        this.transactionId = transactionId;
     }
 
     @Override

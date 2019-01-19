@@ -9,11 +9,11 @@ import javax.enterprise.inject.spi.InjectionPoint;
 
 @ApplicationScoped
 public class LoggerProducer {
-    public static final String LOGGER_NAME = "ShopJohnson";
+    public static final String LOGGER_NAME = "ShopJohnsonLogger";
 
     @Produces
     public Logger createLogger(InjectionPoint injectionPoint) {
 
-        return Logger.getLogger(injectionPoint.getBean().getBeanClass().getName() + LOGGER_NAME);
+        return Logger.getLogger(injectionPoint.getBean().getBeanClass().getName() + " " + LOGGER_NAME);
     }
 }

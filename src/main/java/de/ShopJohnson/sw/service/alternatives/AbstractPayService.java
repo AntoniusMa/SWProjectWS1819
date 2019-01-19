@@ -6,6 +6,6 @@ import de.ShopJohnson.sw.entity.ShopOrder;
  * Interface for implementing alternatives of PayJohnson Service implementations
  */
 public interface AbstractPayService {
-    String instructJohnsonPayment(ShopOrder shopTransaction);
+    String instructJohnsonPayment(ShopOrder shopOrder,float discountFactor, String payJohnsonId, String payJohnsonPassword);
 }
 

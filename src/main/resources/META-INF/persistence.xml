@@ -24,6 +24,16 @@
         </properties>
     </persistence-unit>
     -->
+    <persistence-unit name="furious_heisenberg" transaction-type="JTA">
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <jta-data-source>java:/jboss/furious_heisenberg</jta-data-source>
+        <exclude-unlisted-classes>false</exclude-unlisted-classes>
+        <properties>
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
+            <property name="hibernate.dialect"
+                      value="org.hibernate.dialect.MySQL57Dialect"/>
+        </properties>
+    </persistence-unit>
 
 
 </persistence>

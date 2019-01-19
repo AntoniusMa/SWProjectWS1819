@@ -26,7 +26,7 @@ public class LoginFilter implements Filter {
         if (userModel == null || !userModel.isLoggedIn()) {
             response.sendRedirect(contextPath + "/login.xhtml");
         }
-        filterChain.doFilter(req, response);
+        filterChain.doFilter(request, response);
 
     }
 
