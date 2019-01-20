@@ -45,7 +45,7 @@
 
 
     <welcome-file-list>
-        <welcome-file>userPage.xhtml</welcome-file>
+        <welcome-file>homeScreen.xhtml</welcome-file>
     </welcome-file-list>
 
 </web-app>

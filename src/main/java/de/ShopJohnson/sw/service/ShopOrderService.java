@@ -59,4 +59,11 @@ public class ShopOrderService {
     public ShopOrder getById(long id) {
         return entityManager.find(ShopOrder.class, id);
     }
+    public ShopOrder getShopOrderWithDiscountCode(DiscountCodeEntity discountCodeEntity) {
+        TypedQuery<ShopOrder> query = entityManager.createQuery("select o from ShopOrder as o where discountCode.id = " +
+                ":discountCodeId", ShopOrder.class);
+        query.setParameter("discountCodeId", discountCodeEntity.getId());
+
+        return query.getSingleResult();
+    }
 }

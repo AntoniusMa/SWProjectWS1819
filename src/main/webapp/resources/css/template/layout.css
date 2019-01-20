@@ -1,13 +1,15 @@
 
 #top {
     position: relative;
-    background-color: forestgreen;
+    background-color: #00b33c;
     background-image: url("#{request.contextPath}/resources/images/oth-regensburg-logo-bildmarke.png");
     background-repeat: no-repeat;
     color: black;
-    height: 70px;
     padding: 5px 5px 15px 180px;
     margin: 0px 0px 10px 0px;
+}
+#oth-logo {
+    background-image: url("#{request.contextPath}/resources/images/oth-regensburg-logo-bildmarke.png");
 }
 
 #bottom {
@@ -16,13 +18,6 @@
     padding: 5px;
     margin: 10px 0px 0px 0px;
     z-index: -1;
-}
-
-#left {
-    float: left;
-    background-color: #ece3a5;
-    padding: 5px;
-    width: 150px;
 }
 
 #right {
@@ -38,10 +33,9 @@
     padding: 5px;
 }
 
-.left_content {
-    background-color: #dddddd;
+.main_content {
+    background-color: #eeeeee;
     padding: 5px;
-    margin-left: 170px;
 }
 
 .right_content {
@@ -57,9 +51,25 @@
 }
 
 #top a:link:hover, #top a:visited:hover  {
-    color: cornflowerblue;
+    color: yellow;
     font-weight : bold;
     text-decoration : underline;
+}
+#home-screen {
+    background-image: url("#{request.contextPath}/resources/images/Regensburg_Steinerne.jpg");
+    height: 100%;
+    width: 100%;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+}
+.welcome_message {
+    height: 50%;
+    background-color: rgba(255,255,255, 0.6);
+    padding: 20px;
+    border-radius: 5px;
 }
 
 

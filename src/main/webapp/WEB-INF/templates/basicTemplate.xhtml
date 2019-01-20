@@ -13,40 +13,54 @@
 </h:head>
 
 
-<h:body>
+<body>
 
     <div id="top">
         <ui:insert name="top">
-            <h3>Shop Johnson</h3><br/>
-            <h:form id="top-form">
-                <h:link value="Shop" outcome="shop"/>&nbsp;&nbsp;&nbsp;&nbsp;
-                <h:link value="Cart #{cartModel.shopOrder.articles.size()}" outcome="cart"/>&nbsp;&nbsp;&nbsp;&nbsp;
-                <h:link type="link" value="User home🥦" outcome="user"/>&nbsp;&nbsp;&nbsp;&nbsp;
-                <p:commandButton style="float: right;" value="addArticles" action="#{shopModel.fillEmptyDataBase}"/>
-            </h:form>
+            <div id="oth-logo">
+
+            </div>
+            <div>
+                <h2 style="margin-bottom: 10px; color: white">Shop Johnson</h2>
+
+                <h:form id="top-form">
+                    <h:link value="Shop" outcome="shop"/>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <h:link value="Cart #{cartModel.shopOrder.articles.size()}" outcome="cart"/>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <h:link type="link" value="User home🥦" outcome="user"/>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <div style="float: right">
+                        <h:outputLabel rendered="#{userModel.loggedIn}" style="color: white; margin-right: 10px" value="You are logged in as #{userModel.customer.username}" />
+                        <p:commandButton rendered="#{userModel.loggedIn}" style="background-color: red; color: white" value="Logout" action="#{userModel.logout}" />
+                        <h:outputLabel rendered="#{!userModel.loggedIn}" style="color: white; margin-right: 10px" value="You are not logged in" />
+                        <p:commandButton rendered="#{!userModel.loggedIn}" value="Login" action="login.xhtml?faces-redirect=true" />
+                    </div>
+
+                </h:form>
+            </div>
+
+
 
         </ui:insert>
     </div>
     <div>
-        <div id="left">
-            <ui:insert name="left">
-                <p:outputPanel rendered="#{userModel.customer.username != null}">
-                    <div align="center">
-                        You are logged in as <br/>
-                        #{userModel.customer.username} <br/>
-                        Welcome <br/>#{userModel.customer.firstname} <br/> #{userModel.customer.lastname}
-                    </div>
-                    <div align="center">
-                    <h:graphicImage style="width: 80%;" value="https://memegenerator.net/img/instances/58076838/please-buy-my-stuff.jpg"/>
-                    </div>
-                </p:outputPanel>
-                <p:outputLabel rendered="#{userModel.customer.username == null}">
-                    You are not logged in
-                </p:outputLabel>
+        <!--<div id="left">-->
+            <!--<ui:insert name="left">-->
+                <!--<p:outputPanel rendered="#{userModel.customer.username != null}">-->
+                    <!--<div align="center">-->
+                        <!--You are logged in as <br/>-->
+                        <!--#{userModel.customer.username} <br/>-->
+                        <!--Welcome <br/>#{userModel.customer.firstname} <br/> #{userModel.customer.lastname}-->
+                    <!--</div>-->
+                    <!--<div align="center">-->
+                    <!--<h:graphicImage style="width: 80%;" value="https://memegenerator.net/img/instances/58076838/please-buy-my-stuff.jpg"/>-->
+                    <!--</div>-->
+                <!--</p:outputPanel>-->
+                <!--<p:outputLabel rendered="#{userModel.customer.username == null}">-->
+                    <!--You are not logged in-->
+                <!--</p:outputLabel>-->
 
-            </ui:insert>
-        </div>
-        <div id="content" class="left_content">
+            <!--</ui:insert>-->
+        <!--</div>-->
+        <div id="content" class="main_content">
             <ui:insert name="content">
                 CONTENT
             </ui:insert>
@@ -58,5 +72,5 @@
         </ui:insert>
     </div>
 
-</h:body>
+</body>
 </html>

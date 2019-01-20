@@ -84,8 +84,20 @@ public class DiscountCodeService implements DiscountCodeIF, Serializable {
         Random random = new Random();
         boolean decider = random.nextBoolean();
         if(decider) {
+            System.out.println("New discount code");
             return this.createSingleDiscountCode();
         }
         return null;
+    }
+    @Transactional(Transactional.TxType.REQUIRED)
+    @WebMethod(exclude = true)
+    public List<DiscountCodeEntity> removeInvalidDiscountCodes() {
+        return discountCodeRepo.removeInvalid();
+    }
+
+    @Transactional(Transactional.TxType.REQUIRED)
+    @WebMethod(exclude = true)
+    public DiscountCodeEntity getById(String id) {
+        return discountCodeRepo.getById(id);
     }
 }

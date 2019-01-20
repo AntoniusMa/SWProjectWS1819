@@ -70,10 +70,7 @@ public class ArticleService {
 
 
     public List<Article> getAllArticles() {
-//        TypedQuery<Article> query = entityManager.createQuery(
-//                "SELECT a FROM Article AS a",
-//                Article.class
-//        );
+
         return articleRepo.getAll();
     }
 }

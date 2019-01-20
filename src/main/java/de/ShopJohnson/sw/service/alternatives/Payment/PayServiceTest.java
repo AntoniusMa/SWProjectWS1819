@@ -24,6 +24,6 @@ public class PayServiceTest implements AbstractPayService, Serializable {
         catch (Exception e) {
 
         }
-        return TransactionStatus.TRANSACTION_NOT_CONFIRMED;
+        return TransactionStatus.TRANSACTION_DATA_CONFIRMED;
     }
 }

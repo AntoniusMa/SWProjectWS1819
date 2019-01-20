@@ -2,9 +2,8 @@ package de.ShopJohnson.sw.ui.model;
 
 import de.ShopJohnson.sw.DTO.DiscountCode;
 import de.ShopJohnson.sw.Emeddables.ShopTransaction;
-import de.ShopJohnson.sw.JohnonConfig;
 import de.ShopJohnson.sw.entity.DiscountCodeEntity;
-import de.ShopJohnson.sw.entity.repo.DiscountCodeRepo;
+import de.ShopJohnson.sw.service.DiscountCodeService;
 import de.ShopJohnson.sw.service.ShopOrderService;
 import de.ShopJohnson.sw.service.alternatives.AbstractPayService;
 import de.ShopJohnson.sw.ui.consts.TransactionStatus;
@@ -15,7 +14,7 @@ import org.primefaces.PrimeFaces;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-import javax.faces.convert.FacesConverter;
+
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
@@ -34,6 +33,8 @@ public class CartModel implements Serializable {
 
     private String discountCodeInput;
 
+    private DiscountCode generatedDiscountCode;
+
     private float discountFactor = 1.0f;
 
     private String discountMeme = "";
@@ -47,7 +48,7 @@ public class CartModel implements Serializable {
     ShopOrderService shopOrderService;
 
     @Inject
-    DiscountCodeRepo discountCodeRepo;
+    DiscountCodeService discountCodeService;
 
     @Inject
     Logger logger;
@@ -82,21 +83,33 @@ public class CartModel implements Serializable {
 
         FacesContext facesContext = FacesContext.getCurrentInstance();
         FacesMessage.Severity messageSeverity = FacesMessage.SEVERITY_ERROR;
+
         String messageSummary = "Could not submit order";
         String messageDetail = "";
 
 
         if(!userModel.isLoggedIn()) {
+            // Ordering should only be possible when logged in
+            messageDetail = "You need to be logged in to order";
+            facesContext.addMessage(null, new FacesMessage(messageSeverity, messageSummary, messageDetail));
             return;
         }
+
         shopOrder.setCustomer(userModel.getCustomer());
         ShopTransaction shopTransaction = new ShopTransaction(payJohnsonName, TransactionStatus.TRANSACTION_NOT_CONFIRMED);
         shopOrder.setShopTransaction(shopTransaction);
+
         String status = payService.instructJohnsonPayment(shopOrder, discountFactor, payJohnsonName, payJohnsonPw);
+
+
+
+        // Handle result of the payment instruction and display according message
+
         if(status.equals(TransactionStatus.TRANSACTION_DATA_CONFIRMED)) {
             shopOrder.setBillingAmount(shopOrder.getBillingAmount() * discountFactor);
             shopOrder.getShopTransaction().setPayStatus(status);
             shopOrderService.persistShopOrder(shopOrder);
+            generatedDiscountCode = discountCodeService.generateBonusDiscountCode();
             pf.executeScript("PF('pay_dialog_success').show()");
         }
         else {
@@ -124,7 +137,7 @@ public class CartModel implements Serializable {
             messageSummary = "Can not apply multiple discount codes";
         }
         else {
-            DiscountCodeEntity discountCodeEntity = discountCodeRepo.getById(discountCodeInput);
+            DiscountCodeEntity discountCodeEntity = discountCodeService.getById(discountCodeInput);
             if (discountCodeEntity==null){
                 messageSeverity = FacesMessage.SEVERITY_ERROR;
                 messageSummary = "Failed";
@@ -159,6 +172,7 @@ public class CartModel implements Serializable {
         discountCodeInput = null;
         shopOrder = new ShopOrder(new ArrayList<Article>());
         discountFactor = 1.0f;
+        generatedDiscountCode = null;
     }
 
     public String getPayJohnsonName() {
@@ -207,5 +221,13 @@ public class CartModel implements Serializable {
 
     public void setPayJohnsonPw(String payJohnsonPw) {
         this.payJohnsonPw = payJohnsonPw;
+    }
+
+    public DiscountCode getGeneratedDiscountCode() {
+        return generatedDiscountCode;
+    }
+
+    public void setGeneratedDiscountCode(DiscountCode generatedDiscountCode) {
+        this.generatedDiscountCode = generatedDiscountCode;
     }
 }

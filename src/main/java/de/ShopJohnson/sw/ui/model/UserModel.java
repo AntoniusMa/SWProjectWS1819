@@ -8,6 +8,7 @@ import de.ShopJohnson.sw.entity.util.EntityUtils;
 import org.primefaces.PrimeFaces;
 
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -63,6 +64,17 @@ public class UserModel implements Serializable {
             loginModel.setLoginStatus("Username or password wrong");
         }
         return null;
+    }
+    public void logout() {
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().clear();
+        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+        try {
+            FacesContext.getCurrentInstance().getExternalContext().redirect("homeScreen.xhtml");
+        }
+        catch (Exception e) {
+
+        }
+
     }
 
 
