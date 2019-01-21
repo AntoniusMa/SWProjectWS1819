@@ -9,64 +9,67 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import java.util.List;
+import org.jboss.logging.Logger;
 
 
 @RequestScoped
 public class CustomerService {
-//    @PersistenceContext(unitName = "examplePU")
-//    private  EntityManager entityManager;
+
     @Inject
     CustomerRepo customerRepo;
 
+    @Inject
+    Logger logger;
     /**
      * Hash password and register a new Customer
-     * @param c Customer to register
+     * @param customer Customer to register
      * @return registered Customer or null (if something goes wrong)
      */
     @Transactional(Transactional.TxType.REQUIRED)
-    public Customer register(Customer c) {
-        c.setSalt(EntityUtils.createRandomString(32));
+    public Customer register(Customer customer) {
+        customer.setSalt(EntityUtils.createRandomString(32));
         try {
-            c.setPassword(EntityUtils.hashPassword(c.getPassword(), c.getSalt(), "SHA-256"));
+            customer.setPassword(EntityUtils.hashPassword(customer.getPassword(), customer.getSalt(), "SHA-256"));
         }
         catch (Exception e) {
             return null;
         }
-        c = persist(c);
-        return c;
+        customer = persist(customer);
+
+        return customer;
     }
 
     /**
      * Unregister an already registered Customer
-     * @param c Customer to unregister
+     * @param customer Customer to unregister
      * @return unregistered Customer
      */
     @Transactional(Transactional.TxType.REQUIRED)
-    public Customer unregister(Customer c) {
-        c = customerRepo.getById(c.getId());
-        customerRepo.remove(c);
+    public Customer unregister(Customer customer) {
+        customer = customerRepo.getById(customer.getId());
+        customerRepo.remove(customer);
 
-        return c;
+        return customer;
     }
 
     /**
      * Makes persist available without specifically injecting the repository
-     * @param c Customer to persist
+     * @param customer Customer to persist
      * @return persisted Customer
      */
     @Transactional(Transactional.TxType.REQUIRED)
-    public Customer persist(Customer c) {
-        customerRepo.persist(c);
-        return c;
+    public Customer persist(Customer customer) {
+        customerRepo.persist(customer);
+        return customer;
     }
 
     /**
      * Makes merge available without specifically injecting the repository
-     * @param c Customer to persist
+     * @param customer Customer to persist
      * @return merged Customer
      */
-    public Customer merge(Customer c) {
-        return customerRepo.merge(c);
+    public Customer merge(Customer customer) {
+        return customerRepo.merge(customer);
     }
 
     /**
@@ -76,19 +79,6 @@ public class CustomerService {
      */
     public Customer getCustomerByName(String username) {
         return customerRepo.getCustomerByUsername(username);
-    }
-
-    /**
-     * Gets Customer with username and hashed password
-     * @param username username of the Customer
-     * @param password hashed password of the Customer
-     * @return found Customer
-     */
-    public Customer getCustomerWithLogin(String username, String password){
-        if(username==null || password == null) {
-            return null;
-        }
-        return customerRepo.getCustomerByLogin(username, password);
     }
 
     /**
@@ -102,11 +92,11 @@ public class CustomerService {
 
     /**
      * Changes data of the Customer
-     * @param c Customer Object with changed data
+     * @param customer Customer Object with changed data
      * @return changed Customer
      */
-    public Customer changeCustomerData(Customer c) {
-        return customerRepo.merge(c);
+    public Customer changeCustomerData(Customer customer) {
+        return customerRepo.merge(customer);
     }
 
     public List<Customer> getAllCustomers() {

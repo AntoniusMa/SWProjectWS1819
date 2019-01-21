@@ -1,6 +1,7 @@
 
 package de.jevenari.sw.service;
 
+import java.io.Serializable;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
@@ -29,7 +30,9 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "instructPayment", propOrder = {
     "transaction"
 })
-public class InstructPayment {
+public class InstructPayment
+    implements Serializable
+{
 
     protected TransactionDTO transaction;
 

@@ -10,6 +10,11 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.inject.Inject;
 
+/**
+ * Converter for ShopOrder entities
+ * This will Convert a ShopOrder to a String that displays the Order id, billing amount and pay status and vice versa
+ * This is not really necessary but implemented to show that the concept of a converter is understood
+ */
 @FacesConverter("ShopOrderConverter")
 public class ShopOrderConverter implements Converter {
 

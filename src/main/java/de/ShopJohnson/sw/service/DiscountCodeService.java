@@ -1,6 +1,7 @@
 package de.ShopJohnson.sw.service;
 
 import de.ShopJohnson.sw.DTO.DiscountCode;
+import de.ShopJohnson.sw.config.JohnsonConfig;
 import de.ShopJohnson.sw.entity.DiscountCodeEntity;
 import de.ShopJohnson.sw.entity.repo.DiscountCodeRepo;
 import de.ShopJohnson.sw.service.exception.DiscountCodeException;
@@ -22,16 +23,25 @@ public class DiscountCodeService implements DiscountCodeIF, Serializable {
     @Inject
     DiscountCodeRepo discountCodeRepo;
 
+    /**
+     * creates a single DiscountCodeEntity with discount amount of JohnsonConfig.DISCOUNT_CODE_DEFAULT_AMOUNT
+     * @return DiscountCode Object of generated DiscountCodeEntity
+     */
     @Override
     @Transactional(Transactional.TxType.REQUIRED)
     @WebMethod(exclude = true)
     public DiscountCode createSingleDiscountCode() {
-        DiscountCodeEntity dc = new DiscountCodeEntity(0.50f);
+        DiscountCodeEntity dc = new DiscountCodeEntity(JohnsonConfig.DISCOUNT_CODE_DEFAULT_AMOUNT);
         discountCodeRepo.persist(dc);
         return new DiscountCode(dc);
     }
 
-    //@WebMethod
+    /**
+     * Webservice function that is used by partner systems to generate DiscountCodes for ShopJohnson
+     * @param amount Amount of DiscountCodes
+     * @return List of DiscountCode objects
+     * @throws DiscountCodeException Exception thrown when something went wrong during execute of the service
+     */
     @Override
     @Transactional(Transactional.TxType.REQUIRED)
     public List<DiscountCode> createMultipleDiscountCodes(int amount) throws DiscountCodeException {
@@ -84,11 +94,15 @@ public class DiscountCodeService implements DiscountCodeIF, Serializable {
         Random random = new Random();
         boolean decider = random.nextBoolean();
         if(decider) {
-            System.out.println("New discount code");
             return this.createSingleDiscountCode();
         }
         return null;
     }
+
+    /**
+     * Removes invalid DiscountCodeEntities from the database
+     * @return List of removed DiscountCodeEntities
+     */
     @Transactional(Transactional.TxType.REQUIRED)
     @WebMethod(exclude = true)
     public List<DiscountCodeEntity> removeInvalidDiscountCodes() {

@@ -17,7 +17,7 @@ import javax.xml.ws.WebServiceFeature;
  * Generated source version: 2.2
  * 
  */
-@WebServiceClient(name = "PaymentServiceService", targetNamespace = "http://service.sw.jevenari.de/", wsdlLocation = "http://194.95.108.9:8080/PayJohnson-0.1/PaymentService?wsdl")
+@WebServiceClient(name = "PaymentServiceService", targetNamespace = "http://service.sw.jevenari.de/", wsdlLocation = "http://im-lamport.oth-regensburg.de:8080/PayJohnson-0.1/PaymentService?wsdl")
 public class PaymentServiceService
     extends Service
 {
@@ -30,7 +30,7 @@ public class PaymentServiceService
         URL url = null;
         WebServiceException e = null;
         try {
-            url = new URL("http://194.95.108.9:8080/PayJohnson-0.1/PaymentService?wsdl");
+            url = new URL("http://im-lamport.oth-regensburg.de:8080/PayJohnson-0.1/PaymentService?wsdl");
         } catch (MalformedURLException ex) {
             e = new WebServiceException(ex);
         }

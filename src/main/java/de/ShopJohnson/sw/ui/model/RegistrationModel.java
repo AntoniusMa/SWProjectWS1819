@@ -2,7 +2,7 @@ package de.ShopJohnson.sw.ui.model;
 
 import de.ShopJohnson.sw.Emeddables.Address;
 import de.ShopJohnson.sw.service.CustomerService;
-import de.ShopJohnson.sw.ui.consts.RegistrationStatus;
+import de.ShopJohnson.sw.config.consts.RegistrationStatus;
 import de.ShopJohnson.sw.entity.Customer;
 import org.hibernate.exception.ConstraintViolationException;
 

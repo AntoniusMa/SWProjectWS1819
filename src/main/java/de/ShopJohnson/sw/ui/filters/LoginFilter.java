@@ -9,12 +9,23 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+/**
+ * Filter to determine which page to display when User navigates to User home
+ */
 public class LoginFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
 
     }
 
+    /**
+     * Takes incoming request, determines if user is logged in and redirects to login if not
+     * @param req Incoming request
+     * @param res Outgoing response
+     * @param filterChain Chain of filters that the request needs to go through
+     * @throws IOException
+     * @throws ServletException
+     */
     @Override
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) req;

@@ -1,6 +1,7 @@
 
 package de.jevenari.sw.service;
 
+import java.io.Serializable;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
@@ -39,7 +40,9 @@ import javax.xml.bind.annotation.XmlType;
     "targetUserName",
     "transactionId"
 })
-public class TransactionDTO {
+public class TransactionDTO
+    implements Serializable
+{
 
     protected double amount;
     protected String sourceUserName;

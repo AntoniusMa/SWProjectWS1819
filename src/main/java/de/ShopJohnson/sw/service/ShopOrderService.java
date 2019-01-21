@@ -1,7 +1,6 @@
 package de.ShopJohnson.sw.service;
 
-import de.ShopJohnson.sw.DTO.DiscountCode;
-import de.ShopJohnson.sw.JohnonConfig;
+import de.ShopJohnson.sw.config.JohnsonConfig;
 import de.ShopJohnson.sw.entity.Customer;
 import de.ShopJohnson.sw.entity.DiscountCodeEntity;
 import de.ShopJohnson.sw.entity.ShopOrder;
@@ -16,7 +15,7 @@ import java.util.List;
 
 @RequestScoped
 public class ShopOrderService {
-    @PersistenceContext(unitName = JohnonConfig.PERSISTANCE_UNIT_NAME)
+    @PersistenceContext(unitName = JohnsonConfig.PERSISTANCE_UNIT_NAME)
     private EntityManager entityManager;
 
     @Inject
@@ -59,10 +58,29 @@ public class ShopOrderService {
     public ShopOrder getById(long id) {
         return entityManager.find(ShopOrder.class, id);
     }
+
+    /**
+     * Finds a ShopOrder buy using DiscountCodeEntity that was used for it
+     * @param discountCodeEntity DiscountCodeEntity that was used for a ShopOrder
+     * @return ShopOrder that used the discountCodeEntity
+     */
     public ShopOrder getShopOrderWithDiscountCode(DiscountCodeEntity discountCodeEntity) {
         TypedQuery<ShopOrder> query = entityManager.createQuery("select o from ShopOrder as o where discountCode.id = " +
                 ":discountCodeId", ShopOrder.class);
         query.setParameter("discountCodeId", discountCodeEntity.getId());
+
+        return query.getSingleResult();
+    }
+
+    /**
+     * Finds a ShopOrder with the given PayJohnson id (matching between ShopOrder and PayJohnson Transaction)
+     * @param id payJohnsonId
+     * @return ShopOrder with given payJohnson id
+     */
+    public ShopOrder getWithTransactionId(String id) {
+        TypedQuery<ShopOrder> query = entityManager.createQuery("select o from ShopOrder as o where " +
+                "shopTransaction.transactionId = :transactionId", ShopOrder.class);
+        query.setParameter("transactionId", id);
 
         return query.getSingleResult();
     }

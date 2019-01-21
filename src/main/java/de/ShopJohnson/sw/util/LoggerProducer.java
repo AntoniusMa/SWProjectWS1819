@@ -13,6 +13,13 @@ public class LoggerProducer {
 
     @Produces
     public Logger createLogger(InjectionPoint injectionPoint) {
-        return Logger.getLogger(injectionPoint.getBean().getBeanClass().getName() + " " + LOGGER_NAME);
+        Logger logger;
+        try {
+            logger = Logger.getLogger(injectionPoint.getBean().getBeanClass().getName() + " " + LOGGER_NAME);
+        }
+        catch (Exception e) {
+            logger = Logger.getLogger("ShopJohnson");
+        }
+        return logger;
     }
 }

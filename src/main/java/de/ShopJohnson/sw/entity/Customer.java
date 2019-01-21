@@ -26,6 +26,11 @@ public class Customer extends GeneratedIdEntity {
 
     private Address address;
 
+
+    /* The system will only store ShopOrders for Customers that are still registered if a customer unregisters
+     * all of his ShopOrders will be deleted as well. Additionally adding/changing/removing ShopOrders in the List of
+     * ShopOrders of the Customer will also add/change/remove the ShopOrder from the Database
+     * (Both functionalities are not implemented in the GUI)*/
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private List<ShopOrder> shopOrders;
 
@@ -111,8 +116,8 @@ public class Customer extends GeneratedIdEntity {
     public String toString() {
         return "Customer{" +
                 "CustomerId = " + getCustomerId() +
-                ", Firstname = " + getFirstname() +
-                ", Lastname = " + getLastname() +
+                ", First name = " + getFirstname() +
+                ", Last name = " + getLastname() +
                 ", Username " + getUsername() +
                 ", Address " + getAddress() + "}";
     }

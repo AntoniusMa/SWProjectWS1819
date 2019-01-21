@@ -3,7 +3,9 @@ package de.ShopJohnson.sw.Emeddables;
 import javax.persistence.Embeddable;
 
 
-
+/**
+ * Embeddable for addresses
+ */
 @Embeddable
 public class Address {
     

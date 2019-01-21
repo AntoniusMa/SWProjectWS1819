@@ -13,19 +13,27 @@
     <ui:composition template="./WEB-INF/templates/basicTemplate.xhtml">
         <ui:define name="content">
             <f:view>
-                <h1>Login and Registration</h1>
-                <h:form id="login-form">
-                    Please login or <h:link value="register" outcome="register" /> <br/>
-                    <h:panelGrid columns="2" >
-                        <p:outputLabel for="username" value="Username:"/>
-                        <p:inputText id="username" value="#{loginModel.username}" placeholder="Username"/>
-                        <p:outputLabel for="password" value="Password:" />
-                        <p:inputText id="password" type="password" value="#{loginModel.password}" placeholder="Password"/>
-                        <p:commandButton ajax="false" value="Login" update="login-form" action="#{userModel.tryLogin}"/>
-                        <p:outputLabel style="color: red" value="#{loginModel.loginStatus}" />
-                    </h:panelGrid>
 
-                </h:form>
+                <h1>Login</h1>
+                <div style="width: 100%; display: flex">
+                    <div style="width: 20%">
+                        <h:form id="login-form">
+                            Please login or <h:link value="register" outcome="register" /> <br/>
+                            <h:panelGrid columns="2" >
+                                <p:outputLabel for="username" value="Username:"/>
+                                <p:inputText id="username" value="#{loginModel.username}" placeholder="Username"/>
+                                <p:outputLabel for="password" value="Password:" />
+                                <p:inputText id="password" type="password" value="#{loginModel.password}" placeholder="Password"/>
+                                <p:commandButton ajax="false" value="Login" update="login-form" action="#{userModel.tryLogin}"/>
+                                <p:outputLabel style="color: red" value="#{loginModel.loginStatus}" />
+                            </h:panelGrid>
+
+                        </h:form>
+                    </div>
+                    <div style="width: 80%; height: 20%">
+                        <h:graphicImage style="height: 200px; margin-top: 5px" value="http://www.quickmeme.com/img/04/04f826171de75dd13691ee2860d860d943f273615625171d3fa75cb1a2b84507.jpg" />
+                    </div>
+                </div>
             </f:view>
         </ui:define>
     </ui:composition>

@@ -1,5 +1,8 @@
-package de.ShopJohnson.sw.ui.consts;
+package de.ShopJohnson.sw.config.consts;
 
+/**
+ * Enum to convert registration status to string
+ */
 public enum RegistrationStatus {
     FAILED {
         public String toString() {

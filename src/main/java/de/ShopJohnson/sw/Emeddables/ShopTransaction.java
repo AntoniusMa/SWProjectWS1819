@@ -1,6 +1,5 @@
 package de.ShopJohnson.sw.Emeddables;
 
-import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 

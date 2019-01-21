@@ -35,11 +35,6 @@ public class UserModel implements Serializable {
     private List<ShopOrder> shopOrders;
 
     /**
-     * Function that decides on which page to forward when trying to go to user page
-     * @return if logged in: user else login
-     */
-
-    /**
      * Tries to login redirects to userPage if successful
      * @return
      */
@@ -65,6 +60,10 @@ public class UserModel implements Serializable {
         }
         return null;
     }
+
+    /**
+     * Logs out by destroying the Session and redirecting to home screen
+     */
     public void logout() {
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().clear();
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
@@ -77,7 +76,9 @@ public class UserModel implements Serializable {
 
     }
 
-
+    /**
+     * Sets session attribute to determine if user is logged in or not in LoginFilter
+     */
     private void setSession() {
         FacesContext facesContext = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(true);

@@ -14,28 +14,35 @@
             <ui:define name="content">
                 <f:view>
                     <h1>Your profile #{userModel.customer.username}</h1>
-                    <h:panelGrid columns="2" cellpadding="5">
-                        <p:outputLabel for="username" value="Username:" />
-                        <p:outputLabel id="username" value="#{userModel.customer.username}"/>
+                    <div style="width: 100%; display: flex">
+                        <div style="width: 20%">
+                            <h:panelGrid columns="2" cellpadding="5">
+                                <p:outputLabel for="username" value="Username:" />
+                                <p:outputLabel id="username" value="#{userModel.customer.username}"/>
 
-                        <p:outputLabel for="firstname" value="Firstname: " />
-                        <p:outputLabel id="firstname" value="#{userModel.customer.firstname}"/>
+                                <p:outputLabel for="firstname" value="Firstname: " />
+                                <p:outputLabel id="firstname" value="#{userModel.customer.firstname}"/>
 
-                        <p:outputLabel for="lastname" value="Lastname: " />
-                        <p:outputLabel id="lastname" value="#{userModel.customer.lastname}" />
+                                <p:outputLabel for="lastname" value="Lastname: " />
+                                <p:outputLabel id="lastname" value="#{userModel.customer.lastname}" />
 
-                        <p:outputLabel for="postalcode" value="Postalcode:" />
-                        <p:outputLabel id="postalcode" value="#{userModel.customer.address.zipCode}"/>
+                                <p:outputLabel for="postalcode" value="Postalcode:" />
+                                <p:outputLabel id="postalcode" value="#{userModel.customer.address.zipCode}"/>
 
-                        <p:outputLabel for = "street" value="Street: " />
-                        <p:outputLabel id="street" value="#{userModel.customer.address.street}"/>
+                                <p:outputLabel for = "street" value="Street: " />
+                                <p:outputLabel id="street" value="#{userModel.customer.address.street}"/>
 
-                        <p:outputLabel for = "city" value="City: " />
-                        <p:outputLabel id="city" value="#{userModel.customer.address.city}"/>
+                                <p:outputLabel for = "city" value="City: " />
+                                <p:outputLabel id="city" value="#{userModel.customer.address.city}"/>
 
-                        <p:outputLabel for = "country" value="Country: " />
-                        <p:outputLabel id="country" value="#{userModel.customer.address.country}"/>
-                    </h:panelGrid>
+                                <p:outputLabel for = "country" value="Country: " />
+                                <p:outputLabel id="country" value="#{userModel.customer.address.country}"/>
+                            </h:panelGrid>
+                        </div>
+                        <div style="width: 80%; height: 20%">
+                            <h:graphicImage style="height: 200px; margin-top: 5px" value="https://memegenerator.net/img/instances/58076838/please-buy-my-stuff.jpg" />
+                        </div>
+                    </div>
                 </f:view>
 
                 <h:form id="orders-form">

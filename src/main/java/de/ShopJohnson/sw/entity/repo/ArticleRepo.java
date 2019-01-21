@@ -5,6 +5,10 @@ import de.ShopJohnson.sw.entity.util.SingleIdEntityRepository;
 
 import javax.enterprise.context.Dependent;
 
+
+/**
+ * Repository for Article Entities
+ */
 @Dependent
 public class ArticleRepo extends SingleIdEntityRepository<Long, Article> {
 

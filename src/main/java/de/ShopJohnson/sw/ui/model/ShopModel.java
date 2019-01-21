@@ -2,6 +2,7 @@ package de.ShopJohnson.sw.ui.model;
 
 import de.ShopJohnson.sw.service.ArticleService;
 import de.ShopJohnson.sw.entity.Article;
+import org.jboss.logging.Logger;
 
 
 import javax.annotation.PostConstruct;
@@ -19,10 +20,14 @@ public class ShopModel implements Serializable {
 
     private List<Article> articleList;
 
+    @Inject
+    Logger logger;
+
     /**
-     * Function used to fill the database with dummy data
+     * Fills empty DB with example articles and redirects to shop page
+     * @return shop.xthml
      */
-    public void fillEmptyDataBase() {
+    public String fillEmptyDataBase() {
         if (articleService.getAllArticles().isEmpty()) {
             articleService.addArticleToRange(new Article("Lasersword chopsticks", 19.99f, "Chopsticks in Lasersword optic",
                     "https://cdn.shopify.com/s/files/1/2212/5665/products/inspire-uplift-home-kitchen-red-lightsaber-chopsticks-32834872395_1000x.jpg?v=1538968279"));
@@ -42,7 +47,10 @@ public class ShopModel implements Serializable {
                     "https://etel-tuning.eu/385-home_default/getriebesand.jpg"));
             articleService.addArticleToRange(new Article("Sonic Obama Backpack", 50f, "",
                     "http://1.media.collegehumor.cvcdn.com/37/25/188bd53a49d5184a37e901cfea581969.jpg"));
+            logger.info("Added articles to database");
         }
+        logger.info("Articles are already in database");
+        return "shop.xhtml?faces-redirect=true";
     }
 
     /**

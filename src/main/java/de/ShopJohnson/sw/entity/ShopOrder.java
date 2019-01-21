@@ -126,6 +126,7 @@ public class ShopOrder extends GeneratedIdEntity {
     for (Article a : this.articles) {
         sb.append('\n');
     }
+    sb.append("}");
     s = sb.toString();
     return s;
     }

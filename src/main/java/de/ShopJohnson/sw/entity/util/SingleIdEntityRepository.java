@@ -1,6 +1,6 @@
 package de.ShopJohnson.sw.entity.util;
 
-import de.ShopJohnson.sw.JohnonConfig;
+import de.ShopJohnson.sw.config.JohnsonConfig;
 
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
@@ -21,7 +21,7 @@ import javax.transaction.Transactional.TxType;
 public abstract class
 SingleIdEntityRepository<K, E extends SingleIdEntity> implements Serializable {
     
-    public static final String PERSISTENCE_UNIT_NAME = JohnonConfig.PERSISTANCE_UNIT_NAME;
+    public static final String PERSISTENCE_UNIT_NAME = JohnsonConfig.PERSISTANCE_UNIT_NAME;
     
     private Class<E> entityClass;
     

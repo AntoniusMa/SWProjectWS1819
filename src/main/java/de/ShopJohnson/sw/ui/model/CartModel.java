@@ -6,7 +6,7 @@ import de.ShopJohnson.sw.entity.DiscountCodeEntity;
 import de.ShopJohnson.sw.service.DiscountCodeService;
 import de.ShopJohnson.sw.service.ShopOrderService;
 import de.ShopJohnson.sw.service.alternatives.AbstractPayService;
-import de.ShopJohnson.sw.ui.consts.TransactionStatus;
+import de.ShopJohnson.sw.config.consts.TransactionStatus;
 import de.ShopJohnson.sw.entity.Article;
 import de.ShopJohnson.sw.entity.ShopOrder;
 import org.primefaces.PrimeFaces;
@@ -121,6 +121,8 @@ public class CartModel implements Serializable {
             }
             facesContext.addMessage(null, new FacesMessage(messageSeverity, messageSummary, messageDetail));
         }
+        //reset password
+        payJohnsonPw = null;
     }
 
     /**

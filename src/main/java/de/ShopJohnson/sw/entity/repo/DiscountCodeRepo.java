@@ -4,7 +4,6 @@ import de.ShopJohnson.sw.entity.DiscountCodeEntity;
 import de.ShopJohnson.sw.entity.ShopOrder;
 import de.ShopJohnson.sw.entity.util.SingleIdEntityRepository;
 import de.ShopJohnson.sw.service.ShopOrderService;
-import org.hibernate.QueryException;
 import org.jboss.logging.Logger;
 
 import javax.enterprise.context.Dependent;
@@ -13,6 +12,10 @@ import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
+
+/**
+ * Repository for DiscountCodeEntities
+ */
 @Dependent
 public class DiscountCodeRepo extends SingleIdEntityRepository<String, DiscountCodeEntity> {
 
@@ -22,6 +25,10 @@ public class DiscountCodeRepo extends SingleIdEntityRepository<String, DiscountC
     @Inject
     Logger logger;
 
+    /**
+     * Used to get all DiscountCodeEntities that are listed as invalid
+     * @return List of invalid DiscountCodeeEntities
+     */
     public List<DiscountCodeEntity> getInvalidDiscountCodes() {
         TypedQuery<DiscountCodeEntity> query = super.em.createQuery("select d from DiscountCodeEntity as d where" +
                 " isValid = false ", DiscountCodeEntity.class);
@@ -29,6 +36,10 @@ public class DiscountCodeRepo extends SingleIdEntityRepository<String, DiscountC
         return query.getResultList();
     }
 
+    /**
+     * Removes all invalid DiscountCodeEntities from the database
+     * @return List of removed DiscountCodeEntities
+     */
     public List<DiscountCodeEntity> removeInvalid() {
         List<DiscountCodeEntity> invalid = getInvalidDiscountCodes();
         for (DiscountCodeEntity d : invalid) {
