@@ -5,6 +5,7 @@ import de.ShopJohnson.sw.entity.DiscountCodeEntity;
 import de.ShopJohnson.sw.service.DiscountCodeService;
 import de.ShopJohnson.sw.service.ShopOrderService;
 //import de.ShopJohnson.sw.test.queue.TestPayJohnsonQueue;
+//import de.jevenari.sw.service.TransactionDTO;
 import org.jboss.logging.Logger;
 
 import javax.ejb.Schedule;
@@ -53,7 +54,7 @@ public class DiscountCodeScheduler {
 //            persistent = false)
 //    public void testStatusQueue() {
 //        TransactionDTO transactionDTO = new TransactionDTO();
-//        transactionDTO.setTransactionId("814db885-898f-4d51-a7d7-380905bbf327");
+//        transactionDTO.setTransactionId("8b7df57e-6397-415e-bd31-bfec15d65e07");
 //        transactionDTO.setStatus(true);
 //        testPayJohnsonQueue.sendPayUpdate(transactionDTO);
 //    }

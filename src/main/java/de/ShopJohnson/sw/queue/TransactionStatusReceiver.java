@@ -13,6 +13,9 @@ import javax.jms.Message;
 import javax.jms.MessageListener;
 import javax.jms.ObjectMessage;
 import javax.json.Json;
+import javax.json.JsonObject;
+import javax.json.JsonReader;
+import java.io.StringReader;
 
 
 /**
@@ -42,8 +45,13 @@ public class TransactionStatusReceiver implements MessageListener {
         try {
             if(message instanceof ObjectMessage) {
                 Object obj = ((ObjectMessage) message).getObject();
-                if (obj instanceof TransactionDTO) {
-                    TransactionDTO transactionDTO = (TransactionDTO) obj;
+                if (obj instanceof String) {
+                    String transactionJson = (String) obj;
+                    JsonReader jsonReader = Json.createReader(new StringReader(transactionJson));
+                    JsonObject jsonObject = jsonReader.readObject();
+                    TransactionDTO transactionDTO = new TransactionDTO();
+                    transactionDTO.setStatus(jsonObject.getBoolean("success"));
+                    transactionDTO.setTransactionId(jsonObject.getString("transactionId"));
                     if(transactionDTO.isStatus()) {
                         ShopOrder shopOrder = shopOrderService.getWithTransactionId(transactionDTO.getTransactionId());
                         shopOrder.getShopTransaction().setPayStatus(TransactionStatus.TRANSACTION_CONFIRMED);
